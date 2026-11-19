@@ -663,6 +663,10 @@ function launchConfetti() {
 }
 
 /* ================== LOCAL & REAL-TIME DATA LAYER ================== */
+const API_BASE = window.location.origin.includes('onrender.com')
+  ? ''
+  : 'https://christmas-party-guest-registration.onrender.com';
+
 const STORAGE_KEYS = {
   GUESTS: 'mhc_guest_reg_guests_v2',
   ROUNDS: 'mhc_guest_reg_rounds_v2',
@@ -705,29 +709,64 @@ function persistStorage() {
   } catch(e) {}
 }
 
-// Background sync with server if available
+// Background sync with cloud server across different PCs & devices
+let lastServerUpdated = 0;
+let isSyncing = false;
+
 async function serverSync() {
+  if (isSyncing) return;
+  isSyncing = true;
   try {
-    const res = await fetch('/api/guest-data');
+    const res = await fetch(API_BASE + '/api/guest-data', { cache: 'no-store' });
     if (res.ok) {
       const data = await res.json();
       if (data && Array.isArray(data.guests)) {
-        const map = new Map();
-        guests.forEach(g => map.set(g.id, g));
-        data.guests.forEach(g => map.set(g.id, g));
-        guests = Array.from(map.values());
-        if (Array.isArray(data.rounds)) rounds = data.rounds;
-        if (data.cfg) cfg = Object.assign({}, DEF, data.cfg);
-        persistStorage();
+        const serverUpdated = data.updated || 0;
+        const serverCount = data.guests.length;
+        const localCount = guests.length;
+
+        if (serverUpdated !== lastServerUpdated || serverCount !== localCount) {
+          lastServerUpdated = serverUpdated;
+          const map = new Map();
+          // Keep local if not yet uploaded
+          guests.forEach(g => { if (g && g.id) map.set(g.id, g); });
+          // Merge authoritative server guests
+          data.guests.forEach(g => { if (g && g.id) map.set(g.id, g); });
+          guests = Array.from(map.values());
+
+          if (Array.isArray(data.rounds) && data.rounds.length) {
+            rounds = data.rounds;
+          }
+          if (data.cfg && Object.keys(data.cfg).length) {
+            cfg = Object.assign({}, DEF, data.cfg);
+          }
+          persistStorage();
+          render();
+          if (isLive()) renderLiveWall();
+        }
+
+        // Live draw lot state from server
+        if (data.live) {
+          const elapsed = Date.now() - (data.live.at || 0);
+          if (data.live.state === 'drawing' && elapsed < 14000) {
+            spin(true, data.live.round, data.live.prize);
+          } else if (data.live.state === 'done') {
+            spin(false);
+          }
+        }
+
         updateSyncTags('● cloud sync');
-        render();
-        if (isLive()) renderLiveWall();
+        isSyncing = false;
         return;
       }
     }
   } catch(e) {}
-  updateSyncTags('● live');
+  isSyncing = false;
+  updateSyncTags('● offline');
 }
+
+// Automatically poll cloud server every 2 seconds on all connected PCs and devices
+setInterval(serverSync, 2000);
 
 function updateSyncTags(label) {
   if ($('sync')) $('sync').textContent = label;
@@ -735,12 +774,18 @@ function updateSyncTags(label) {
   if ($('lw-sync')) $('lw-sync').textContent = label;
 }
 
-async function serverPush() {
+async function serverPush(liveState) {
   try {
-    await fetch('/api/guest-data', {
+    await fetch(API_BASE + '/api/guest-data', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ guests, rounds, cfg, updated: Date.now() })
+      body: JSON.stringify({
+        guests,
+        rounds,
+        cfg,
+        live: liveState !== undefined ? liveState : null,
+        updated: Date.now()
+      })
     });
   } catch(e) {}
 }
@@ -813,8 +858,11 @@ async function init() {
     const r = sessionStorage.getItem('role');
     if (r) role = r;
   } catch(e) {}
-  serverSync();
   show();
+  await serverSync();
+  if (guests.length > 0) {
+    serverPush();
+  }
 }
 
 /* ================== AUTH & ROUTING ================== */
@@ -1197,6 +1245,7 @@ const rclick = e => {
   drawing = true;
   startDrumRoll();
   if (bc) bc.postMessage({ type: 'SPIN_STATE', drawing: true, round: r.name, prize: r.prize });
+  serverPush({ state: 'drawing', round: r.name, prize: r.prize, at: Date.now() });
   render();
   if (isLive()) {
     if ($('live-box')) $('live-box').classList.add('drawing');
@@ -1231,6 +1280,7 @@ const rclick = e => {
       });
       drawing = false;
       if (bc) bc.postMessage({ type: 'SPIN_STATE', drawing: false });
+      serverPush({ state: 'done', winner: pick, round: r.name, prize: r.prize, at: Date.now() });
       render();
       if (isLive()) renderLiveWall();
     }

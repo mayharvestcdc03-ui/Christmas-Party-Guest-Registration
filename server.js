@@ -13,12 +13,19 @@ if (!fs.existsSync(DATA_DIR)) {
 function loadData() {
   try {
     if (fs.existsSync(DATA_FILE)) {
-      return JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+      const parsed = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+      return {
+        guests: Array.isArray(parsed.guests) ? parsed.guests : [],
+        rounds: Array.isArray(parsed.rounds) ? parsed.rounds : [],
+        cfg: parsed.cfg || {},
+        live: parsed.live || null,
+        updated: parsed.updated || Date.now()
+      };
     }
   } catch (err) {
     console.error('Error reading data:', err);
   }
-  return { guests: [], rounds: [], cfg: {}, updated: Date.now() };
+  return { guests: [], rounds: [], cfg: {}, live: null, updated: Date.now() };
 }
 
 function saveData(data) {
@@ -44,7 +51,7 @@ const mimeTypes = {
 };
 
 const server = http.createServer((req, res) => {
-  // CORS
+  // CORS - allow all origins so GitHub Pages can call this Render backend freely
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -58,7 +65,31 @@ const server = http.createServer((req, res) => {
   const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
   const pathname = decodeURIComponent(url.pathname);
 
-  // API Endpoints
+  // Live state API
+  if (pathname === '/api/live') {
+    if (req.method === 'GET') {
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify(serverState.live || null));
+      return;
+    }
+    if (req.method === 'POST') {
+      let body = '';
+      req.on('data', chunk => { body += chunk; });
+      req.on('end', () => {
+        try {
+          serverState.live = JSON.parse(body);
+          res.writeHead(200, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ ok: true }));
+        } catch(e) {
+          res.writeHead(400, { 'Content-Type': 'application/json' });
+          res.end(JSON.stringify({ error: 'Invalid JSON' }));
+        }
+      });
+      return;
+    }
+  }
+
+  // Guest Data API
   if (pathname === '/api/guest-data') {
     if (req.method === 'GET') {
       res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -72,14 +103,21 @@ const server = http.createServer((req, res) => {
         try {
           const parsed = JSON.parse(body);
           if (parsed && typeof parsed === 'object') {
-            if (Array.isArray(parsed.guests)) serverState.guests = parsed.guests;
+            if (Array.isArray(parsed.guests)) {
+              // Smart merge: update existing or add new
+              const map = new Map();
+              serverState.guests.forEach(g => { if (g && g.id) map.set(g.id, g); });
+              parsed.guests.forEach(g => { if (g && g.id) map.set(g.id, g); });
+              serverState.guests = Array.from(map.values());
+            }
             if (Array.isArray(parsed.rounds)) serverState.rounds = parsed.rounds;
-            if (parsed.cfg) serverState.cfg = parsed.cfg;
+            if (parsed.cfg) serverState.cfg = Object.assign({}, serverState.cfg, parsed.cfg);
+            if (parsed.live) serverState.live = parsed.live;
             serverState.updated = Date.now();
             saveData(serverState);
           }
           res.writeHead(200, { 'Content-Type': 'application/json' });
-          res.end(JSON.stringify({ success: true, updated: serverState.updated }));
+          res.end(JSON.stringify({ success: true, updated: serverState.updated, count: serverState.guests.length }));
         } catch(e) {
           res.writeHead(400, { 'Content-Type': 'application/json' });
           res.end(JSON.stringify({ error: 'Invalid JSON' }));
