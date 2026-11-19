@@ -1,0 +1,20 @@
+{
+  "name": "christmas-party-guest-registration",
+  "version": "1.0.0",
+  "description": "Christmas Party Guest Registration & Raffle System - May Harvest",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node -e \"console.log('OK')\""
+  },
+  "keywords": [
+    "christmas-party",
+    "guest-registration",
+    "raffle-draw"
+  ],
+  "author": "May Harvest Corporation",
+  "license": "ISC",
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

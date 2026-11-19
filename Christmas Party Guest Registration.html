@@ -4,96 +4,144 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Christmas Party Guest Registration</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎄</text></svg>">
 <style>
-:root{--bg:#faf6f0;--card:#fff;--tx:#25302b;--mu:#6b7770;--bd:#e4ddd0;--red:#b3262e;--grn:#1f6b4a;--gold:#c9962b;--soft:#f3ece0;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#17201c;--card:#202b26;--tx:#eef2ee;--mu:#9aa8a0;--bd:#33423a;--red:#e0555c;--grn:#4fb589;--gold:#e0b04a;--soft:#2a3731;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#17201c;--card:#202b26;--tx:#eef2ee;--mu:#9aa8a0;--bd:#33423a;--red:#e0555c;--grn:#4fb589;--gold:#e0b04a;--soft:#2a3731;color-scheme:dark}
-*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-header{background:var(--grn);color:#fff;padding:14px 18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-header h1{font-size:1.15rem;margin:0;flex:1;min-width:180px}
-header small{opacity:.85}
-main{max-width:860px;margin:0 auto;padding:18px}
-.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:18px;margin-bottom:16px}
-h2{margin:0 0 12px;font-size:1.1rem}
+:root{
+  --bg:#faf6f0;--card:#fff;--tx:#25302b;--mu:#6b7770;--bd:#e4ddd0;
+  --red:#b3262e;--red-dark:#8e1d23;--grn:#1f6b4a;--grn-dark:#165238;
+  --gold:#c9962b;--gold-light:#fef3c7;--soft:#f3ece0;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#17201c;--card:#202b26;--tx:#eef2ee;--mu:#9aa8a0;--bd:#33423a;
+    --red:#e0555c;--red-dark:#b3262e;--grn:#4fb589;--grn-dark:#1f6b4a;
+    --gold:#e0b04a;--gold-light:#2e2410;--soft:#2a3731;color-scheme:dark
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#17201c;--card:#202b26;--tx:#eef2ee;--mu:#9aa8a0;--bd:#33423a;
+  --red:#e0555c;--red-dark:#b3262e;--grn:#4fb589;--grn-dark:#1f6b4a;
+  --gold:#e0b04a;--gold-light:#2e2410;--soft:#2a3731;color-scheme:dark
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
+header{background:linear-gradient(135deg,var(--grn),var(--grn-dark));color:#fff;padding:14px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
+header h1{font-size:1.2rem;margin:0;flex:1;min-width:180px;font-weight:700}
+header small{opacity:.9;font-weight:400}
+main{max-width:920px;margin:0 auto;padding:18px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:20px;margin-bottom:18px;box-shadow:0 2px 6px rgba(0,0,0,0.03)}
+h2{margin:0 0 14px;font-size:1.15rem;font-weight:700;color:var(--tx)}
 label{display:block;font-weight:600;margin:10px 0 4px;font-size:.9rem}
-input{width:100%;padding:11px 12px;border:1px solid var(--bd);border-radius:10px;font:inherit;background:var(--bg);color:var(--tx)}
+input{width:100%;padding:11px 13px;border:1px solid var(--bd);border-radius:10px;font:inherit;background:var(--bg);color:var(--tx);transition:border-color .2s}
 input:focus{outline:2px solid var(--gold);border-color:var(--gold)}
-button{font:inherit;cursor:pointer;border:0;border-radius:10px;padding:10px 16px;background:var(--red);color:#fff;font-weight:600}
+button{font:inherit;cursor:pointer;border:0;border-radius:10px;padding:10px 18px;background:var(--red);color:#fff;font-weight:600;transition:opacity .15s,transform .1s}
+button:active{transform:scale(.98)}
 button.sec{background:var(--soft);color:var(--tx);border:1px solid var(--bd)}
-button.sm{padding:6px 10px;font-size:.85rem}
+button.sm{padding:6px 12px;font-size:.85rem}
 button.ok{background:var(--grn)}
-button:disabled{opacity:.5;cursor:default}
-.tabs{display:flex;gap:6px;margin-bottom:16px;overflow-x:auto}
-.tabs button{background:var(--soft);color:var(--tx);border:1px solid var(--bd);white-space:nowrap}
-.tabs button.on{background:var(--red);color:#fff;border-color:var(--red)}
-.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+button:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.tabs{display:flex;gap:8px;margin-bottom:18px;overflow-x:auto;padding-bottom:4px}
+.tabs button{background:var(--card);color:var(--tx);border:1px solid var(--bd);white-space:nowrap;font-size:.92rem;border-radius:99px;padding:8px 16px}
+.tabs button.on{background:var(--red);color:#fff;border-color:var(--red);box-shadow:0 2px 6px rgba(179,38,46,0.3)}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
 .row>*{flex:1;min-width:150px}
 .tbl{overflow-x:auto}
 table{width:100%;border-collapse:collapse}
-th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--bd);font-size:.93rem}
-th{color:var(--mu);font-weight:600;font-size:.8rem;text-transform:uppercase}
-.tag{display:inline-block;padding:2px 9px;border-radius:99px;font-size:.78rem;font-weight:700}
-.tag.y{background:var(--grn);color:#fff}.tag.n{background:var(--soft);color:var(--mu)}.tag.w{background:var(--gold);color:#222}
-.msg{padding:10px 12px;border-radius:10px;margin-top:12px;background:var(--soft);font-size:.92rem}
-.msg.err{border:1px solid var(--red)}.msg.good{border:1px solid var(--grn)}
-.stat{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px}
-.stat div{flex:1;min-width:110px;background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:12px 14px}
-.stat b{display:block;font-size:1.6rem}.stat span{color:var(--mu);font-size:.82rem}
-.winner{text-align:center;padding:26px 10px;font-size:1.9rem;font-weight:800;color:var(--red);min-height:110px}
-.winner small{display:block;font-size:1rem;color:var(--mu);font-weight:500}
-.chk{display:flex;gap:8px;align-items:center;font-weight:500;margin:4px 0;padding:6px 10px;border:1px solid var(--bd);border-radius:10px;background:var(--bg)}.chk input{width:auto}
-#clist{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:2px 10px;margin:6px 0}
+th,td{text-align:left;padding:10px 10px;border-bottom:1px solid var(--bd);font-size:.92rem}
+th{color:var(--mu);font-weight:700;font-size:.8rem;text-transform:uppercase;letter-spacing:.03em}
+.tag{display:inline-block;padding:3px 10px;border-radius:99px;font-size:.78rem;font-weight:700}
+.tag.y{background:var(--grn);color:#fff}
+.tag.n{background:var(--soft);color:var(--mu)}
+.tag.w{background:var(--gold);color:#fff}
+.msg{padding:11px 14px;border-radius:10px;margin-top:12px;background:var(--soft);font-size:.92rem;line-height:1.4}
+.msg.err{border:1px solid var(--red);color:var(--red);background:#fff0f1}
+.msg.good{border:1px solid var(--grn);color:var(--grn);background:#eefbf3}
+.stat{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.stat div{flex:1;min-width:120px;background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px 16px;box-shadow:0 1px 4px rgba(0,0,0,0.02)}
+.stat b{display:block;font-size:1.8rem;color:var(--red);font-weight:800}.stat span{color:var(--mu);font-size:.82rem;font-weight:600}
+
+/* Center Stage for Draw lots */
+.draw-stage{text-align:center;padding:34px 16px;background:linear-gradient(180deg,var(--soft),var(--card));border-radius:18px;border:2px dashed var(--bd);margin-bottom:20px}
+.winner{font-size:clamp(2.4rem,7vw,4.8rem);font-weight:900;color:var(--red);min-height:120px;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.15;text-shadow:0 2px 4px rgba(0,0,0,0.05)}
+.winner small{display:block;font-size:clamp(1.1rem,3vw,1.6rem);color:var(--tx);font-weight:600;margin-top:10px}
+
+.chk{display:flex;gap:8px;align-items:center;font-weight:500;margin:4px 0;padding:7px 11px;border:1px solid var(--bd);border-radius:10px;background:var(--bg);cursor:pointer}.chk input{width:auto}
+#clist{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:6px 12px;margin:8px 0}
 canvas#sig{width:100%;max-width:520px;height:auto;aspect-ratio:3/1;background:#fff;border:2px dashed var(--bd);border-radius:10px;touch-action:none;display:block}
 img.sigimg{height:42px;background:#fff;border:1px solid var(--bd);border-radius:6px;display:block;margin-top:4px}
 .hide{display:none!important}
-.chip{display:inline-block;padding:3px 11px;border:1px solid var(--bd);border-radius:99px;margin:3px 5px 3px 0;background:var(--bg);font-size:.9rem}
-.co{padding:11px 0;border-bottom:1px solid var(--bd)}.co:last-child{border-bottom:0}.co b{display:block;margin-bottom:3px}.co b span{color:var(--mu);font-weight:500}
+.chip{display:inline-block;padding:4px 12px;border:1px solid var(--bd);border-radius:99px;margin:3px 6px 3px 0;background:var(--bg);font-size:.9rem}
+.co{padding:12px 0;border-bottom:1px solid var(--bd)}.co:last-child{border-bottom:0}.co b{display:block;margin-bottom:5px;font-size:1.05rem}.co b span{color:var(--mu);font-weight:500;font-size:.9rem}
 body.nodraw #v-wall button[data-a=draw]{display:none}
-#login{max-width:380px;margin:8vh auto}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;padding:16px;z-index:20}
-.modal .card{max-width:360px;width:100%;margin:0}
+#login{max-width:420px;margin:6vh auto;box-shadow:0 4px 20px rgba(0,0,0,0.08)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;padding:16px;z-index:20;backdrop-filter:blur(2px)}
+.modal .card{max-width:380px;width:100%;margin:0}
+
+/* Confetti animation */
+@keyframes confetti-fall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(105vh) rotate(720deg); opacity: 0; }
+}
 </style>
 </head>
 <body>
 
 <div id="login" class="card hide">
-  <h2>🎄 Guest Registration — Sign in</h2>
-  <p id="levt" style="margin:-6px 0 10px;color:var(--mu);font-size:.9rem"></p>
-  <label for="lid">User ID</label><input id="lid" autocomplete="off">
-  <label for="lpin">PIN</label><input id="lpin" type="password" autocomplete="off">
-  <div style="margin-top:14px"><button id="lgo" style="width:100%">Sign in</button></div>
+  <div style="text-align:center;margin-bottom:14px">
+    <div style="font-size:2.4rem">🎄</div>
+    <h2 style="margin:4px 0 2px">Guest Registration</h2>
+    <p id="levt" style="margin:0;color:var(--mu);font-size:.9rem">Christmas Party · Staff Login</p>
+  </div>
+  <label for="lid">User ID (or leave blank)</label>
+  <input id="lid" placeholder="e.g. Admin, HR, Accounting, Picker, Wall" autocomplete="off">
+  <label for="lpin">Password / PIN</label>
+  <input id="lpin" type="password" placeholder="Enter password or PIN" autocomplete="off">
+  <div style="margin-top:16px"><button id="lgo" style="width:100%;padding:12px">Sign in</button></div>
   <div id="lmsg"></div>
-  <div style="margin-top:10px"><button class="sec" id="lpres" style="width:100%">👁 President view (no login)</button></div>
+  <div style="margin-top:12px"><button class="sec" id="lpres" style="width:100%;padding:10px">👁 President view (Live Overview)</button></div>
 </div>
 
 <div id="app" class="hide">
   <header>
-    <h1>🎄 <span id="evt">Christmas Party</span><br><small id="evsub"></small><br><small id="who"></small></h1>
-    <span id="sync" class="tag n">connecting…</span>
-    <button class="sec sm" id="out">Sign out</button>
+    <h1>🎄 <span id="evt">Christmas Party</span><br><small id="evsub"></small><br><small id="who" style="color:var(--gold-light)"></small></h1>
+    <div style="display:flex;gap:8px;align-items:center">
+      <span id="sync" class="tag y">● live</span>
+      <button class="sec sm" id="out">Sign out</button>
+    </div>
   </header>
   <main>
     <div class="tabs" id="tabs"></div>
+
+    <!-- Registration Tab -->
     <section id="v-reg">
-      <div class="stat"><div><b id="c-all">0</b><span>Registered guests</span></div></div>
+      <div class="stat">
+        <div><b id="c-all">0</b><span>Registered guests</span></div>
+      </div>
       <div class="card">
         <h2>Register a guest</h2>
         <div class="row">
-          <div><label for="gname">Name</label><input id="gname" autocomplete="off"></div>
-          <div><label for="gco">Company</label><input id="gco" autocomplete="off"></div>
+          <div><label for="gname">Guest Full Name *</label><input id="gname" placeholder="e.g. Juan Dela Cruz" autocomplete="off"></div>
+          <div><label for="gco">Company / Affiliation *</label><input id="gco" placeholder="e.g. May Harvest / Supplier" autocomplete="off"></div>
         </div>
-        <div style="margin-top:14px"><button id="gsave">Register guest</button></div>
+        <div style="margin-top:16px"><button id="gsave">Register guest</button></div>
         <div id="gmsg"></div>
       </div>
       <div class="card">
         <h2>Registered guests</h2>
         <input id="search" placeholder="Search name or company…">
-        <div class="tbl"><table><thead><tr><th>#</th><th>Name</th><th>Company</th><th>Time</th></tr></thead><tbody id="tb-reg"></tbody></table></div>
+        <div class="tbl" style="margin-top:12px">
+          <table>
+            <thead><tr><th>#</th><th>Name</th><th>Company</th><th>Time</th></tr></thead>
+            <tbody id="tb-reg"></tbody>
+          </table>
+        </div>
       </div>
     </section>
 
-    <section id="v-guests" class="hide admin">
+    <!-- Guests & Qualification Tab -->
+    <section id="v-guests" class="hide">
       <div class="stat">
         <div><b id="s-all">0</b><span>Registered</span></div>
         <div><b id="s-q">0</b><span>Qualified for raffle</span></div>
@@ -101,98 +149,157 @@ body.nodraw #v-wall button[data-a=draw]{display:none}
       </div>
       <div class="card">
         <h2>Raffle qualification</h2>
-        <p style="color:var(--mu);margin-top:0;font-size:.9rem">Tap <b>Confirm</b> to qualify a guest for the raffle. Tap <b>Remove</b> to undo it.</p>
+        <p style="color:var(--mu);margin-top:0;font-size:.9rem">Tap <b>Confirm</b> to qualify a guest for the raffle draw. Tap <b>Remove</b> to undo.</p>
         <input id="gsearch" placeholder="Search name or company…">
-        <div class="tbl"><table><thead><tr><th>Name</th><th>Company</th><th>Raffle</th><th></th></tr></thead><tbody id="tb-g"></tbody></table></div>
+        <div class="tbl" style="margin-top:12px">
+          <table>
+            <thead><tr><th>Name</th><th>Company</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody id="tb-g"></tbody>
+          </table>
+        </div>
       </div>
     </section>
 
-    <section id="v-raffle" class="hide admin">
+    <!-- Raffle Rounds Management Tab -->
+    <section id="v-raffle" class="hide">
       <div class="card">
         <h2>🎁 Add a raffle round</h2>
         <div class="row">
-          <div><label for="rname">Set name</label><input id="rname" placeholder="e.g. Set 1" autocomplete="off"></div>
+          <div><label for="rname">Set name</label><input id="rname" placeholder="e.g. Major Prize Set 1" autocomplete="off"></div>
           <div><label for="rdraws">Number of draws</label><input id="rdraws" type="number" min="1" value="1"></div>
-          <div><label for="rprize">Prize (optional)</label><input id="rprize" placeholder="e.g. Smart TV" autocomplete="off"></div>
+          <div><label for="rprize">Prize (optional)</label><input id="rprize" placeholder="e.g. Smart TV / Microwave" autocomplete="off"></div>
         </div>
-        <label>Companies that can win in this round</label>
+        <label style="margin-top:12px">Companies eligible for this round</label>
         <label class="chk"><input type="checkbox" id="call"> <span id="calltxt">All companies</span></label>
         <div id="clist"></div>
-        <div style="margin-top:10px"><button id="radd">Add round</button></div>
+        <div style="margin-top:12px"><button id="radd">Add round</button></div>
         <div id="rmsg"></div>
       </div>
+
       <div class="card">
-        <h2>Rounds</h2>
-        <div class="winner" id="win">—</div>
-        <div class="tbl"><table><thead><tr><th>Set</th><th>Drawn</th><th>Eligible companies</th><th></th></tr></thead><tbody id="tb-r"></tbody></table></div>
+        <h2>Rounds &amp; Live Draw Preview</h2>
+        <div class="draw-stage">
+          <div class="winner" id="win">—</div>
+        </div>
+        <div class="tbl">
+          <table>
+            <thead><tr><th>Set</th><th>Drawn</th><th>Eligible companies</th><th></th></tr></thead>
+            <tbody id="tb-r"></tbody>
+          </table>
+        </div>
       </div>
+
       <div class="card hide" id="sigbox">
         <h2>Signature — <span id="signame"></span></h2>
         <canvas id="sig" width="600" height="200"></canvas>
-        <div class="row" style="margin-top:10px">
-          <button class="ok" id="ssig">Save signature and mark claimed</button>
+        <div class="row" style="margin-top:12px">
+          <button class="ok" id="ssig">Save signature &amp; mark claimed</button>
           <button class="sec" id="sclear">Clear</button>
           <button class="sec" id="snosig">Mark claimed without signature</button>
           <button class="sec" id="scancel">Cancel</button>
         </div>
         <div id="sigmsg"></div>
       </div>
+
       <div class="card">
         <h2>Winners</h2>
-        <div class="tbl"><table><thead><tr><th>#</th><th>Name</th><th>Company</th><th>Set</th><th>Prize</th><th>Drawn by</th><th>Status</th></tr></thead><tbody id="tb-w"></tbody></table></div>
+        <div class="tbl">
+          <table>
+            <thead><tr><th>#</th><th>Name</th><th>Company</th><th>Set</th><th>Prize</th><th>Drawn by</th><th>Status</th></tr></thead>
+            <tbody id="tb-w"></tbody>
+          </table>
+        </div>
       </div>
     </section>
 
-    <section id="v-event" class="hide admin">
+    <!-- Video Wall & Draw Display -->
+    <section id="v-wall" class="hide">
+      <div class="card" style="padding:24px">
+        <div class="row" style="justify-content:space-between;margin-bottom:16px">
+          <div>
+            <h2 style="margin:0" id="wevt">Draw Stage</h2>
+            <small id="wevsub" style="color:var(--mu)"></small>
+          </div>
+          <div style="display:flex;gap:8px;flex:0 0 auto">
+            <button class="sec sm" id="soundToggle">🔊 Sound ON</button>
+            <button class="sec sm" id="fs">⛶ Full screen</button>
+          </div>
+        </div>
+
+        <!-- Big Centered Name Layout -->
+        <div class="draw-stage" style="min-height:240px">
+          <div class="winner" id="win2">—</div>
+        </div>
+
+        <div class="tbl">
+          <table>
+            <thead><tr><th>Set</th><th>Drawn</th><th>Eligible companies</th><th>Action</th></tr></thead>
+            <tbody id="tb-r2"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Event Details Tab -->
+    <section id="v-event" class="hide">
       <div class="card">
         <h2>Event details</h2>
-        <label for="ename">Event name</label><input id="ename" placeholder="e.g. Company Christmas Party 2026" autocomplete="off">
+        <label for="ename">Event name</label>
+        <input id="ename" placeholder="e.g. May Harvest Christmas Party 2026" autocomplete="off">
         <div class="row">
-          <div><label for="otype">Type of occasion</label><input id="otype" list="otypes" placeholder="e.g. Christmas Party" autocomplete="off">
-            <datalist id="otypes"><option value="Christmas Party"><option value="Year-End Party"><option value="Anniversary"><option value="Team Building"><option value="Conference"><option value="Awarding Ceremony"></datalist></div>
+          <div>
+            <label for="otype">Type of occasion</label>
+            <input id="otype" list="otypes" placeholder="e.g. Christmas Party" autocomplete="off">
+            <datalist id="otypes">
+              <option value="Christmas Party">
+              <option value="Year-End Party">
+              <option value="Anniversary">
+              <option value="Team Building">
+              <option value="Conference">
+              <option value="Awarding Ceremony">
+            </datalist>
+          </div>
           <div><label for="edate">Date of the event</label><input id="edate" type="date"></div>
         </div>
-        <div style="margin-top:14px"><button id="esave">Save event details</button></div>
+        <div style="margin-top:16px"><button id="esave">Save event details</button></div>
         <div id="emsg"></div>
       </div>
     </section>
 
-    <section id="v-wall" class="hide">
+    <!-- Setup Tab -->
+    <section id="v-setup" class="hide">
       <div class="card">
-        <div class="row" style="justify-content:space-between"><div><h2 style="margin:0" id="wevt">Rounds</h2><small id="wevsub" style="color:var(--mu)"></small></div><button class="sec sm" id="fs" style="flex:0 0 auto">Full screen</button></div>
-        <div class="winner" id="win2" style="font-size:clamp(2rem,6vw,4rem);padding:40px 10px">—</div>
-        <div class="tbl"><table><thead><tr><th>Set</th><th>Drawn</th><th>Eligible companies</th><th></th></tr></thead><tbody id="tb-r2"></tbody></table></div>
-      </div>
-    </section>
-
-    <section id="v-setup" class="hide admin">
-      <div class="card">
-        <h2>Accounts</h2>
+        <h2>Credentials &amp; Roles Setup</h2>
         <div class="row">
-          <div><label for="sgrid">Guest Relations ID</label><input id="sgrid"></div>
-          <div><label for="sgrpin">Guest Relations PIN</label><input id="sgrpin"></div>
+          <div><label for="sadid">Admin ID</label><input id="sadid"></div>
+          <div><label for="sadpin">Admin Password</label><input id="sadpin"></div>
+        </div>
+        <div class="row">
+          <div><label for="shrid">HR ID</label><input id="shrid"></div>
+          <div><label for="shrpin">HR Password</label><input id="shrpin"></div>
+        </div>
+        <div class="row">
+          <div><label for="sacctgid">Accounting ID</label><input id="sacctgid"></div>
+          <div><label for="sacctgpin">Accounting Password</label><input id="sacctgpin"></div>
         </div>
         <div class="row">
           <div><label for="spid">Draw Picker ID</label><input id="spid"></div>
           <div><label for="sppin">Draw Picker PIN</label><input id="sppin"></div>
-          <div><label for="spname">Draw Picker name (shown in the log)</label><input id="spname" placeholder="e.g. Maria Santos, CEO"></div>
+          <div><label for="spname">Draw Picker Name (Log)</label><input id="spname" placeholder="e.g. Claire, President"></div>
         </div>
         <div class="row">
-          <div><label for="swid">Video Wall Operator ID</label><input id="swid"></div>
-          <div><label for="swpin">Video Wall Operator PIN</label><input id="swpin"></div>
+          <div><label for="swid">Video Wall ID</label><input id="swid"></div>
+          <div><label for="swpin">Video Wall PIN</label><input id="swpin"></div>
         </div>
-        <div class="row">
-          <div><label for="sadid">Admin ID</label><input id="sadid"></div>
-          <div><label for="sadpin">Admin PIN</label><input id="sadpin"></div>
-        </div>
-        <div style="margin-top:14px"><button id="ssave">Save setup</button></div>
+        <div style="margin-top:16px"><button id="ssave">Save setup</button></div>
         <div id="smsg"></div>
       </div>
+
       <div class="card">
-        <h2>Data</h2>
+        <h2>Data Management</h2>
         <div class="row">
-          <button class="sec" id="exp">Export guest list (CSV)</button>
-          <button class="sec" id="reset" style="color:var(--red)">Clear all guests</button>
+          <button class="ok" id="exp">📥 Export guest list (CSV)</button>
+          <button class="sec" id="reset" style="color:var(--red)">⚠️ Clear all guests</button>
         </div>
         <div id="dmsg"></div>
       </div>
@@ -200,11 +307,14 @@ body.nodraw #v-wall button[data-a=draw]{display:none}
   </main>
 </div>
 
+<!-- President Live View -->
 <div id="pres" class="hide">
   <header>
-    <h1>🎄 <span id="pevt"></span><br><small id="pevsub"></small><br><small>Present guests &amp; raffle winners · live view</small></h1>
-    <span id="psync" class="tag n"></span>
-    <button class="sec sm" id="pback">Staff login</button>
+    <h1>🎄 <span id="pevt">May Harvest Christmas Party</span><br><small id="pevsub"></small><br><small>Guest List &amp; Raffle Winners · Live View</small></h1>
+    <div style="display:flex;gap:8px;align-items:center">
+      <span id="psync" class="tag y">● live</span>
+      <button class="sec sm" id="pback">Staff login</button>
+    </div>
   </header>
   <main>
     <div class="stat">
@@ -216,319 +326,876 @@ body.nodraw #v-wall button[data-a=draw]{display:none}
     <div class="card">
       <h2>Present guests by company</h2>
       <input id="psearch" placeholder="Search name or company…">
-      <div id="p-list"></div>
+      <div id="p-list" style="margin-top:12px"></div>
     </div>
     <div class="card">
       <h2>🎁 Raffle winners</h2>
-      <div id="p-win"></div>
+      <div id="p-win" style="margin-top:12px"></div>
     </div>
   </main>
 </div>
 
+<!-- Modal for Confirmation -->
 <div id="modal" class="modal hide">
   <div class="card">
     <h2 id="mt">Admin confirmation</h2>
     <p id="mp" style="margin-top:0;color:var(--mu);font-size:.9rem"></p>
-    <label for="mid">Admin ID</label><input id="mid" autocomplete="off">
-    <label for="mpin">Admin PIN</label><input id="mpin" type="password" autocomplete="off">
+    <label for="mid">Admin ID (or leave blank)</label><input id="mid" autocomplete="off">
+    <label for="mpin">Admin PIN / Password</label><input id="mpin" type="password" autocomplete="off">
     <div id="mmsg"></div>
-    <div class="row" style="margin-top:14px"><button class="sec" id="mno">Cancel</button><button class="ok" id="myes">Confirm</button></div>
+    <div class="row" style="margin-top:16px">
+      <button class="sec" id="mno">Cancel</button>
+      <button class="ok" id="myes">Confirm</button>
+    </div>
   </div>
 </div>
 
 <script>
 (function(){
-const $=id=>document.getElementById(id);
-const DEF={event:'Christmas Party',occasion:'Christmas Party',date:'',picker:{id:'PICKER',pin:'7777',name:''},wall:{id:'WALL',pin:'5555'},gr:{id:'GR',pin:'1234'},admin:{id:'ADMIN',pin:'0000'}};
-let cfg=JSON.parse(JSON.stringify(DEF)),guests=[],rounds=[],role=null,db=null,tab='reg',local=false,dl=null;
-const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const norm=s=>String(s||'').trim().toLowerCase();
-const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
-const say=(el,t,k)=>{$(el).innerHTML=t?'<div class="msg '+(k||'')+'">'+esc(t)+'</div>':''};
+const $ = id => document.getElementById(id);
 
-/* ---------- data layer (shared db, falls back to this device only) ---------- */
-async function save(id,data){
-  if(db){try{await db.collection('guests').doc(id).set(data);return true}catch(e){return false}}
-  const i=guests.findIndex(g=>g.id===id);data.id=id;if(i>=0)guests[i]=data;else guests.push(data);render();return true;
+// Predefined Permanent Credentials
+const HARDCODED_CREDS = {
+  president:  { id: 'President',  pin: 'claire123',           role: 'president' },
+  admin:      { id: 'Admin',      pin: '0000',                role: 'admin' },
+  hr:         { id: 'HR',         pin: 'HR2026cHRISTMAS',     role: 'hr' },
+  accounting: { id: 'Accounting', pin: 'Acctg2026IDChristmas', role: 'accounting' },
+  wall:       { id: 'Wall',       pin: '5555',                role: 'wall' },
+  picker:     { id: 'Picker',     pin: '7777',                role: 'picker' }
+};
+
+const DEF = {
+  event: 'Christmas Party',
+  occasion: 'Christmas Party',
+  date: '2026-12-18',
+  admin:      { id: 'Admin',      pin: '0000' },
+  hr:         { id: 'HR',         pin: 'HR2026cHRISTMAS' },
+  accounting: { id: 'Accounting', pin: 'Acctg2026IDChristmas' },
+  picker:     { id: 'Picker',     pin: '7777', name: '' },
+  wall:       { id: 'Wall',       pin: '5555' }
+};
+
+let cfg = JSON.parse(JSON.stringify(DEF));
+let guests = [];
+let rounds = [];
+let role = null;
+let tab = 'reg';
+let soundEnabled = true;
+
+const norm = s => String(s || '').trim().toLowerCase();
+const esc = s => String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+const say = (el, t, k) => { $(el).innerHTML = t ? '<div class="msg ' + (k || '') + '">' + esc(t) + '</div>' : ''; };
+
+/* ================== AUDIO SYNTHESIZER ================== */
+let audioCtx = null;
+function getAudioCtx() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume();
+  }
+  return audioCtx;
 }
-async function patch(id,data){
-  if(db){try{await db.collection('guests').doc(id).update(data);return true}catch(e){return false}}
-  const g=guests.find(x=>x.id===id);if(g)Object.assign(g,data);render();return true;
+
+let drumRollTimer = null;
+function startDrumRoll() {
+  if (!soundEnabled) return;
+  try {
+    const ctx = getAudioCtx();
+    let tick = 0;
+    stopDrumRoll();
+    drumRollTimer = setInterval(() => {
+      try {
+        const bufferSize = ctx.sampleRate * 0.05;
+        const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+        const data = buffer.getChannelData(0);
+        for (let i = 0; i < bufferSize; i++) {
+          data[i] = Math.random() * 2 - 1;
+        }
+        const noise = ctx.createBufferSource();
+        noise.buffer = buffer;
+        const filter = ctx.createBiquadFilter();
+        filter.type = 'highpass';
+        filter.frequency.value = 750;
+        const gain = ctx.createGain();
+        const currentGain = Math.min(0.5, 0.25 + (tick * 0.008));
+        gain.gain.setValueAtTime(currentGain, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.045);
+        noise.connect(filter);
+        filter.connect(gain);
+        gain.connect(ctx.destination);
+        noise.start();
+        tick++;
+      } catch(e) {}
+    }, 60);
+  } catch(e) {}
 }
-async function remove(id){
-  if(db){try{await db.collection('guests').doc(id).delete();return true}catch(e){return false}}
-  guests=guests.filter(g=>g.id!==id);render();return true;
+
+function stopDrumRoll() {
+  if (drumRollTimer) {
+    clearInterval(drumRollTimer);
+    drumRollTimer = null;
+  }
 }
-async function saveCfg(){
-  if(db){try{await db.doc('config/main').set(cfg);return true}catch(e){return false}}
+
+function playFanfare() {
+  if (!soundEnabled) return;
+  try {
+    const ctx = getAudioCtx();
+    const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+    notes.forEach((freq, idx) => {
+      setTimeout(() => {
+        try {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, ctx.currentTime);
+          gain.gain.setValueAtTime(0.35, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + (idx === 3 ? 1.4 : 0.35));
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start();
+          osc.stop(ctx.currentTime + (idx === 3 ? 1.4 : 0.35));
+        } catch(e) {}
+      }, idx * 160);
+    });
+  } catch(e) {}
+}
+
+function launchConfetti() {
+  const count = 65;
+  const colors = ['#b3262e', '#1f6b4a', '#c9962b', '#ffd700', '#ff4757', '#2ed573'];
+  for (let i = 0; i < count; i++) {
+    const el = document.createElement('div');
+    el.style.cssText = `
+      position: fixed;
+      top: -10px;
+      left: ${Math.random() * 100}vw;
+      width: ${Math.random() * 8 + 6}px;
+      height: ${Math.random() * 12 + 8}px;
+      background: ${colors[Math.floor(Math.random() * colors.length)]};
+      transform: rotate(${Math.random() * 360}deg);
+      opacity: 0.95;
+      z-index: 99999;
+      pointer-events: none;
+      animation: confetti-fall ${Math.random() * 2 + 2}s cubic-bezier(.25,.46,.45,.94) forwards;
+    `;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 4000);
+  }
+}
+
+/* ================== LOCAL & REAL-TIME DATA LAYER ================== */
+const STORAGE_KEYS = {
+  GUESTS: 'mhc_guest_reg_guests_v2',
+  ROUNDS: 'mhc_guest_reg_rounds_v2',
+  CFG:    'mhc_guest_reg_cfg_v2'
+};
+
+const bc = typeof BroadcastChannel !== 'undefined' ? new BroadcastChannel('mhc_guest_reg_channel') : null;
+if (bc) {
+  bc.onmessage = ev => {
+    if (ev.data && ev.data.type === 'DATA_UPDATED') {
+      loadStorage();
+      render();
+    } else if (ev.data && ev.data.type === 'SPIN_STATE') {
+      spin(ev.data.drawing);
+    }
+  };
+}
+
+function notifyPeers() {
+  if (bc) bc.postMessage({ type: 'DATA_UPDATED' });
+}
+
+function loadStorage() {
+  try {
+    const sg = localStorage.getItem(STORAGE_KEYS.GUESTS);
+    if (sg) guests = JSON.parse(sg);
+    const sr = localStorage.getItem(STORAGE_KEYS.ROUNDS);
+    if (sr) rounds = JSON.parse(sr);
+    const sc = localStorage.getItem(STORAGE_KEYS.CFG);
+    if (sc) cfg = Object.assign({}, DEF, JSON.parse(sc));
+  } catch(e) {}
+}
+
+function persistStorage() {
+  try {
+    localStorage.setItem(STORAGE_KEYS.GUESTS, JSON.stringify(guests));
+    localStorage.setItem(STORAGE_KEYS.ROUNDS, JSON.stringify(rounds));
+    localStorage.setItem(STORAGE_KEYS.CFG, JSON.stringify(cfg));
+  } catch(e) {}
+}
+
+// Background sync with server if available
+async function serverSync() {
+  try {
+    const res = await fetch('/api/guest-data');
+    if (res.ok) {
+      const data = await res.json();
+      if (data && Array.isArray(data.guests)) {
+        const map = new Map();
+        guests.forEach(g => map.set(g.id, g));
+        data.guests.forEach(g => map.set(g.id, g));
+        guests = Array.from(map.values());
+        if (Array.isArray(data.rounds)) rounds = data.rounds;
+        if (data.cfg) cfg = Object.assign({}, DEF, data.cfg);
+        persistStorage();
+        $('sync').textContent = '● cloud sync';
+        $('sync').className = 'tag y';
+        if ($('psync')) { $('psync').textContent = '● cloud sync'; $('psync').className = 'tag y'; }
+        render();
+        return;
+      }
+    }
+  } catch(e) {}
+  $('sync').textContent = '● live';
+  $('sync').className = 'tag y';
+  if ($('psync')) { $('psync').textContent = '● live'; $('psync').className = 'tag y'; }
+}
+
+async function serverPush() {
+  try {
+    await fetch('/api/guest-data', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ guests, rounds, cfg, updated: Date.now() })
+    });
+  } catch(e) {}
+}
+
+async function save(id, data) {
+  const i = guests.findIndex(g => g.id === id);
+  data.id = id;
+  if (i >= 0) guests[i] = data;
+  else guests.push(data);
+  persistStorage();
+  notifyPeers();
+  render();
+  serverPush();
   return true;
 }
-async function rsave(id,d){
-  if(db){try{await db.collection('rounds').doc(id).set(d);return true}catch(e){return false}}
-  d.id=id;rounds.push(d);render();return true;
+
+async function patch(id, data) {
+  const g = guests.find(x => x.id === id);
+  if (g) Object.assign(g, data);
+  persistStorage();
+  notifyPeers();
+  render();
+  serverPush();
+  return true;
 }
-async function rremove(id){
-  if(db){try{await db.collection('rounds').doc(id).delete();return true}catch(e){return false}}
-  rounds=rounds.filter(r=>r.id!==id);render();return true;
+
+async function remove(id) {
+  guests = guests.filter(g => g.id !== id);
+  persistStorage();
+  notifyPeers();
+  render();
+  serverPush();
+  return true;
 }
-async function init(){
-  try{const c=window.claude&&await Promise.race([claude.use('db'),new Promise(r=>setTimeout(()=>r(null),6000))]);db=c||null}catch(e){db=null}
-  try{dl=window.claude&&await claude.use('downloads')}catch(e){dl=null}
-  if(db){
-    $('sync').textContent='● live';$('sync').className='tag y';
-    db.doc('config/main').onSnapshot(s=>{if(s.exists){const d=s.data();cfg={event:d.event||DEF.event,occasion:d.occasion==null?DEF.occasion:d.occasion,date:d.date||'',gr:Object.assign({},DEF.gr,d.gr),wall:Object.assign({},DEF.wall,d.wall),picker:Object.assign({},DEF.picker,d.picker),admin:Object.assign({},DEF.admin,d.admin)};applyCfg()}},()=>{});
-    db.collection('guests').onSnapshot(s=>{guests=s.docs.map(d=>Object.assign({id:d.id},d.data()));render()},()=>{});
-    db.collection('rounds').onSnapshot(s=>{rounds=s.docs.map(d=>Object.assign({id:d.id},d.data()));render()},()=>{});
-    db.doc('live/state').onSnapshot(s=>{const d=s.exists?s.data():{};spin(d.state==='drawing'&&Date.now()-d.at<15000);render()},()=>{});
-  }else{local=true;$('sync').textContent='this device only';$('sync').className='tag w'}
-  try{const r=sessionStorage.getItem('role');if(r)role=r}catch(e){}
+
+async function saveCfg() {
+  persistStorage();
+  notifyPeers();
+  serverPush();
+  return true;
+}
+
+async function rsave(id, d) {
+  d.id = id;
+  rounds.push(d);
+  persistStorage();
+  notifyPeers();
+  render();
+  serverPush();
+  return true;
+}
+
+async function rremove(id) {
+  rounds = rounds.filter(r => r.id !== id);
+  persistStorage();
+  notifyPeers();
+  render();
+  serverPush();
+  return true;
+}
+
+/* ================== INITIALIZATION ================== */
+async function init() {
+  loadStorage();
+  try {
+    const r = sessionStorage.getItem('role');
+    if (r) role = r;
+  } catch(e) {}
+  serverSync();
   show();
 }
 
-/* ---------- auth ---------- */
-function show(){
-  pres=isPres();
-  $('pres').classList.toggle('hide',!pres);
-  if(pres){$('login').classList.add('hide');$('app').classList.add('hide');$('pback').textContent=role?'← Back':'Staff login';renderPres();return}
-  $('login').classList.toggle('hide',!!role);$('app').classList.toggle('hide',!role);
-  if(!role)return;
-  $('who').textContent=role==='admin'?'Signed in as Admin':role==='wall'?'Signed in as Video Wall Operator (display only)':role==='picker'?'Signed in as Draw Picker'+(cfg.picker.name?' — '+cfg.picker.name:''):'Signed in as Guest Relations';
-  let tabs=[['reg','Registration']];
-  if(role==='admin')tabs.push(['guests','Guests & Qualification'],['raffle','Raffle'],['wall','Draw Display'],['pres','President View'],['event','Event'],['setup','Setup']);
-  if(role==='wall')tabs=[['wall','Draw Display']];
-  if(role==='picker')tabs=[['wall','Draw']];
-  document.body.classList.toggle('nodraw',role==='wall');
-  if(!tabs.some(t=>t[0]===tab))tab=tabs[0][0];
-  $('tabs').innerHTML=tabs.map(t=>'<button data-t="'+t[0]+'" class="'+(t[0]===tab?'on':'')+'">'+t[1]+'</button>').join('');
-  ['reg','guests','raffle','wall','event','setup'].forEach(t=>{$('v-'+t).classList.toggle('hide',t!==tab||!tabs.some(x=>x[0]===t))});
-  applyCfg();render();
+/* ================== AUTH & ROUTING ================== */
+function isPres() {
+  return location.hash.replace('#', '') === 'president';
 }
-$('tabs').onclick=e=>{const t=e.target.dataset.t;if(!t)return;if(t==='pres'){location.hash='president';return}if((role==='wall'||role==='picker')&&t!=='wall')return;if(role==='gr'&&t!=='reg')return;tab=t;show()};
-$('lgo').onclick=()=>{
-  const i=norm($('lid').value),p=$('lpin').value.trim();
-  if(i===norm(cfg.admin.id)&&p===String(cfg.admin.pin))role='admin';
-  else if(i===norm(cfg.gr.id)&&p===String(cfg.gr.pin))role='gr';
-  else if(i===norm(cfg.wall.id)&&p===String(cfg.wall.pin))role='wall';
-  else if(i===norm(cfg.picker.id)&&p===String(cfg.picker.pin))role='picker';
-  else return say('lmsg','Incorrect ID or PIN.','err');
-  try{sessionStorage.setItem('role',role)}catch(e){}
-  $('lpin').value='';tab='reg';show();
+
+function show() {
+  const pres = isPres();
+  $('pres').classList.toggle('hide', !pres);
+  if (pres) {
+    $('login').classList.add('hide');
+    $('app').classList.add('hide');
+    $('pback').textContent = role ? '← Back' : 'Staff login';
+    renderPres();
+    return;
+  }
+  $('login').classList.toggle('hide', !!role);
+  $('app').classList.toggle('hide', !role);
+  if (!role) return;
+
+  const roleLabels = {
+    admin: 'Signed in as Admin',
+    hr: 'Signed in as HR',
+    accounting: 'Signed in as Accounting',
+    wall: 'Signed in as Video Wall Operator',
+    picker: 'Signed in as Draw Picker' + (cfg.picker?.name ? ' — ' + cfg.picker.name : '')
+  };
+  $('who').textContent = roleLabels[role] || 'Signed in as Staff';
+
+  let tabs = [['reg', 'Registration']];
+  if (role === 'admin') {
+    tabs.push(['guests', 'Guests & Qualification'], ['raffle', 'Raffle'], ['wall', 'Draw Display'], ['pres', 'President View'], ['event', 'Event'], ['setup', 'Setup']);
+  } else if (role === 'hr' || role === 'accounting') {
+    tabs.push(['guests', 'Guests & Qualification'], ['pres', 'President View']);
+  } else if (role === 'wall') {
+    tabs = [['wall', 'Draw Display']];
+  } else if (role === 'picker') {
+    tabs = [['wall', 'Draw']];
+  }
+
+  document.body.classList.toggle('nodraw', role === 'wall');
+  if (!tabs.some(t => t[0] === tab)) tab = tabs[0][0];
+
+  $('tabs').innerHTML = tabs.map(t => '<button data-t="' + t[0] + '" class="' + (t[0] === tab ? 'on' : '') + '">' + t[1] + '</button>').join('');
+  ['reg', 'guests', 'raffle', 'wall', 'event', 'setup'].forEach(t => {
+    $('v-' + t).classList.toggle('hide', t !== tab || !tabs.some(x => x[0] === t));
+  });
+
+  applyCfg();
+  render();
+}
+
+$('tabs').onclick = e => {
+  const t = e.target.dataset.t;
+  if (!t) return;
+  if (t === 'pres') { location.hash = 'president'; return; }
+  tab = t;
+  show();
 };
-$('lpin').onkeydown=e=>{if(e.key==='Enter')$('lgo').click()};
-$('out').onclick=()=>{role=null;try{sessionStorage.removeItem('role')}catch(e){}show()};
-function evLine(){
-  let ds='';
-  if(cfg.date){const p=cfg.date.split('-');if(p.length===3)ds=new Date(+p[0],+p[1]-1,+p[2]).toLocaleDateString(undefined,{weekday:'long',year:'numeric',month:'long',day:'numeric'})}
-  return [cfg.occasion,ds].filter(Boolean).join(' · ');
+
+$('lgo').onclick = () => {
+  const i = norm($('lid').value);
+  const p = $('lpin').value.trim();
+
+  // 1. Direct credentials check
+  if ((i === 'president' || !i) && p === HARDCODED_CREDS.president.pin) {
+    location.hash = 'president';
+    return;
+  }
+  if ((i === 'admin' || !i) && p === HARDCODED_CREDS.admin.pin) role = 'admin';
+  else if ((i === 'hr' || !i) && p === HARDCODED_CREDS.hr.pin) role = 'hr';
+  else if ((i === 'accounting' || i === 'acctg' || !i) && p === HARDCODED_CREDS.accounting.pin) role = 'accounting';
+  else if ((i === 'wall' || !i) && p === HARDCODED_CREDS.wall.pin) role = 'wall';
+  else if ((i === 'picker' || !i) && p === HARDCODED_CREDS.picker.pin) role = 'picker';
+  // 2. Dynamic config check
+  else if (i === norm(cfg.admin?.id) && p === String(cfg.admin?.pin)) role = 'admin';
+  else if (i === norm(cfg.hr?.id) && p === String(cfg.hr?.pin)) role = 'hr';
+  else if (i === norm(cfg.accounting?.id) && p === String(cfg.accounting?.pin)) role = 'accounting';
+  else if (i === norm(cfg.wall?.id) && p === String(cfg.wall?.pin)) role = 'wall';
+  else if (i === norm(cfg.picker?.id) && p === String(cfg.picker?.pin)) role = 'picker';
+  else return say('lmsg', 'Incorrect ID or PIN. Please check credentials.', 'err');
+
+  try { sessionStorage.setItem('role', role); } catch(e) {}
+  $('lpin').value = '';
+  tab = (role === 'wall' || role === 'picker') ? 'wall' : 'reg';
+  show();
+};
+
+$('lpin').onkeydown = e => { if (e.key === 'Enter') $('lgo').click(); };
+$('out').onclick = () => {
+  role = null;
+  try { sessionStorage.removeItem('role'); } catch(e) {}
+  show();
+};
+
+function evLine() {
+  let ds = '';
+  if (cfg.date) {
+    const p = cfg.date.split('-');
+    if (p.length === 3) ds = new Date(+p[0], +p[1] - 1, +p[2]).toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  }
+  return [cfg.occasion, ds].filter(Boolean).join(' · ');
 }
-function applyCfg(){
-  $('evt').textContent=cfg.event;$('evsub').textContent=evLine();$('levt').textContent=[cfg.event,evLine()].filter(Boolean).join(' · ');$('wevt').textContent=cfg.event;$('wevsub').textContent=evLine();document.title=cfg.event+' – Guest Registration';
-  if(role==='admin'&&document.activeElement.tagName!=='INPUT'){
-    $('ename').value=cfg.event;$('otype').value=cfg.occasion||'';$('edate').value=cfg.date||'';$('sgrid').value=cfg.gr.id;$('sgrpin').value=cfg.gr.pin;$('swid').value=cfg.wall.id;$('spid').value=cfg.picker.id;$('sppin').value=cfg.picker.pin;$('spname').value=cfg.picker.name||'';$('swpin').value=cfg.wall.pin;$('sadid').value=cfg.admin.id;$('sadpin').value=cfg.admin.pin;
+
+function applyCfg() {
+  $('evt').textContent = cfg.event;
+  $('evsub').textContent = evLine();
+  $('levt').textContent = [cfg.event, evLine()].filter(Boolean).join(' · ');
+  $('wevt').textContent = cfg.event;
+  $('wevsub').textContent = evLine();
+  document.title = cfg.event + ' – Guest Registration';
+
+  if (role === 'admin' && document.activeElement.tagName !== 'INPUT') {
+    $('ename').value = cfg.event || '';
+    $('otype').value = cfg.occasion || '';
+    $('edate').value = cfg.date || '';
+    $('sadid').value = cfg.admin?.id || HARDCODED_CREDS.admin.id;
+    $('sadpin').value = cfg.admin?.pin || HARDCODED_CREDS.admin.pin;
+    $('shrid').value = cfg.hr?.id || HARDCODED_CREDS.hr.id;
+    $('shrpin').value = cfg.hr?.pin || HARDCODED_CREDS.hr.pin;
+    $('sacctgid').value = cfg.accounting?.id || HARDCODED_CREDS.accounting.id;
+    $('sacctgpin').value = cfg.accounting?.pin || HARDCODED_CREDS.accounting.pin;
+    $('swid').value = cfg.wall?.id || HARDCODED_CREDS.wall.id;
+    $('swpin').value = cfg.wall?.pin || HARDCODED_CREDS.wall.pin;
+    $('spid').value = cfg.picker?.id || HARDCODED_CREDS.picker.id;
+    $('sppin').value = cfg.picker?.pin || HARDCODED_CREDS.picker.pin;
+    $('spname').value = cfg.picker?.name || '';
   }
 }
 
-/* ---------- registration (both roles) ---------- */
-$('gsave').onclick=async()=>{
-  const n=$('gname').value.trim().replace(/\s+/g,' '),c=$('gco').value.trim().replace(/\s+/g,' ');
-  if(!n||!c)return say('gmsg','Please enter both Name and Company.','err');
-  if(guests.some(g=>norm(g.name)===norm(n)&&norm(g.company)===norm(c)))return say('gmsg','This guest is already registered.','err');
-  const ok=await save(uid(),{name:n,company:c,at:Date.now(),qualified:false,won:false});
-  if(!ok)return say('gmsg','Could not save. Please try again.','err');
-  $('gname').value='';$('gco').value='';say('gmsg','Welcome, '+n+'! Registered.','good');$('gname').focus();
+/* ================== REGISTRATION ================== */
+$('gsave').onclick = async () => {
+  const n = $('gname').value.trim().replace(/\s+/g, ' ');
+  const c = $('gco').value.trim().replace(/\s+/g, ' ');
+  if (!n || !c) return say('gmsg', 'Please enter both Full Name and Company.', 'err');
+  if (guests.some(g => norm(g.name) === norm(n) && norm(g.company) === norm(c))) {
+    return say('gmsg', 'This guest is already registered.', 'err');
+  }
+  const ok = await save(uid(), { name: n, company: c, at: Date.now(), qualified: false, won: false });
+  if (!ok) return say('gmsg', 'Could not save. Please try again.', 'err');
+  $('gname').value = '';
+  $('gco').value = '';
+  say('gmsg', '🎉 Welcome, ' + n + '! Guest registered successfully.', 'good');
+  $('gname').focus();
 };
-$('gco').onkeydown=e=>{if(e.key==='Enter')$('gsave').click()};
-$('search').oninput=render;$('gsearch').oninput=render;
-const match=(g,q)=>!q||norm(g.name).includes(q)||norm(g.company).includes(q);
-const fmt=t=>t?new Date(t).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}):'';
 
-function render(){
-  if(pres){renderPres();return}
-  if(!role)return;
-  const sorted=guests.slice().sort((a,b)=>(b.at||0)-(a.at||0));
-  $('c-all').textContent=guests.length;
-  const q=norm($('search').value);
-  $('tb-reg').innerHTML=sorted.filter(g=>match(g,q)).map((g,i,a)=>'<tr><td>'+(guests.length-guests.indexOf(g)>0?'':'')+(a.length-i)+'</td><td>'+esc(g.name)+'</td><td>'+esc(g.company)+'</td><td>'+fmt(g.at)+'</td></tr>').join('')||'<tr><td colspan="4" style="color:var(--mu)">No guests yet.</td></tr>';
-  if(role==='wall'||role==='picker'){renderRaffle();return}
-  if(role!=='admin')return;
-  const qual=guests.filter(g=>g.qualified),won=guests.filter(g=>g.won);
-  $('s-all').textContent=guests.length;$('s-q').textContent=qual.length;$('s-w').textContent=won.length;
-  const q2=norm($('gsearch').value);
-  $('tb-g').innerHTML=sorted.filter(g=>match(g,q2)).map(g=>'<tr><td>'+esc(g.name)+'</td><td>'+esc(g.company)+'</td><td>'+(g.won?'<span class="tag w">Winner</span>':g.qualified?'<span class="tag y">Qualified</span>':'<span class="tag n">Not confirmed</span>')+'</td><td>'+(g.qualified?'<button class="sec" style="min-width:104px;padding:12px 14px" data-a="unq" data-id="'+g.id+'">Remove</button>':'<button class="ok" style="min-width:104px;padding:12px 14px" data-a="q" data-id="'+g.id+'">Confirm</button>')+'</td></tr>').join('')||'<tr><td colspan="4" style="color:var(--mu)">No guests yet.</td></tr>';
+$('gco').onkeydown = e => { if (e.key === 'Enter') $('gsave').click(); };
+$('search').oninput = render;
+$('gsearch').oninput = render;
+
+const match = (g, q) => !q || norm(g.name).includes(q) || norm(g.company).includes(q);
+const fmt = t => t ? new Date(t).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
+
+function render() {
+  if (isPres()) { renderPres(); return; }
+  if (!role) return;
+
+  const sorted = guests.slice().sort((a, b) => (b.at || 0) - (a.at || 0));
+  $('c-all').textContent = guests.length;
+  const q = norm($('search').value);
+  $('tb-reg').innerHTML = sorted.filter(g => match(g, q)).map((g, i, a) =>
+    '<tr><td>' + (a.length - i) + '</td><td><b>' + esc(g.name) + '</b></td><td>' + esc(g.company) + '</td><td>' + fmt(g.at) + '</td></tr>'
+  ).join('') || '<tr><td colspan="4" style="color:var(--mu)">No guests yet.</td></tr>';
+
+  if (role === 'wall' || role === 'picker') {
+    renderRaffle();
+    return;
+  }
+
+  const qual = guests.filter(g => g.qualified), won = guests.filter(g => g.won);
+  $('s-all').textContent = guests.length;
+  $('s-q').textContent = qual.length;
+  $('s-w').textContent = won.length;
+
+  const q2 = norm($('gsearch').value);
+  $('tb-g').innerHTML = sorted.filter(g => match(g, q2)).map(g =>
+    '<tr><td><b>' + esc(g.name) + '</b></td><td>' + esc(g.company) + '</td><td>' +
+    (g.won ? '<span class="tag w">Winner</span>' : g.qualified ? '<span class="tag y">Qualified</span>' : '<span class="tag n">Not confirmed</span>') +
+    '</td><td>' +
+    (g.qualified ? '<button class="sec sm" data-a="unq" data-id="' + g.id + '">Remove</button>' : '<button class="ok sm" data-a="q" data-id="' + g.id + '">Confirm</button>') +
+    '</td></tr>'
+  ).join('') || '<tr><td colspan="4" style="color:var(--mu)">No guests yet.</td></tr>';
+
   renderRaffle();
 }
 
-/* ---------- Admin ID confirmation ---------- */
-let pending=null;
-function ask(title,text,fn){pending=fn;$('mt').textContent=title;$('mp').textContent=text;$('mid').value='';$('mpin').value='';$('mmsg').innerHTML='';$('modal').classList.remove('hide');$('mid').focus()}
-$('mno').onclick=()=>{pending=null;$('modal').classList.add('hide')};
-$('myes').onclick=async()=>{
-  if(norm($('mid').value)!==norm(cfg.admin.id)||$('mpin').value.trim()!==String(cfg.admin.pin))return say('mmsg','Admin ID or PIN does not match.','err');
-  const f=pending;pending=null;$('modal').classList.add('hide');if(f)await f();
-};
-$('mpin').onkeydown=e=>{if(e.key==='Enter')$('myes').click()};
-$('tb-g').onclick=e=>{
-  const b=e.target.closest('button');if(!b)return;const g=guests.find(x=>x.id===b.dataset.id);if(!g)return;
-  if(b.dataset.a==='q')patch(g.id,{qualified:true,confirmedBy:cfg.admin.id,confirmedAt:Date.now()});
-  else patch(g.id,{qualified:false,won:false,confirmedBy:'',confirmedAt:0});
+/* ================== QUALIFICATION ACTIONS ================== */
+$('tb-g').onclick = e => {
+  const b = e.target.closest('button');
+  if (!b) return;
+  const g = guests.find(x => x.id === b.dataset.id);
+  if (!g) return;
+  if (b.dataset.a === 'q') patch(g.id, { qualified: true, confirmedBy: role.toUpperCase(), confirmedAt: Date.now() });
+  else patch(g.id, { qualified: false, won: false, confirmedBy: '', confirmedAt: 0 });
 };
 
-/* ---------- raffle ---------- */
-let drawing=false,lastKeys='';
-const setWin=h=>{$('win').innerHTML=h;$('win2').innerHTML=h};
-const myId=()=>role==='admin'?cfg.admin.id:role==='picker'?cfg.picker.id+(cfg.picker.name?' ('+cfg.picker.name+')':''):cfg.wall.id;
-let spinT=null;
-function setLive(s){if(db){try{db.doc('live/state').set({state:s,at:Date.now()}).catch(()=>{})}catch(e){}}}
-function spin(on){
-  if(on&&!spinT&&!drawing){spinT=setInterval(()=>{const q=guests.filter(g=>g.qualified&&!g.won);if(q.length){const x=q[Math.floor(Math.random()*q.length)];setWin(esc(x.name)+'<small>'+esc(x.company)+'</small>')}},90)}
-  if(!on&&spinT){clearInterval(spinT);spinT=null}
+/* ================== ADMIN CONFIRMATION MODAL ================== */
+let pending = null;
+function ask(title, text, fn) {
+  pending = fn;
+  $('mt').textContent = title;
+  $('mp').textContent = text;
+  $('mid').value = '';
+  $('mpin').value = '';
+  $('mmsg').innerHTML = '';
+  $('modal').classList.remove('hide');
+  $('mpin').focus();
 }
-function companies(){
-  const m={};
-  guests.filter(g=>g.qualified).forEach(g=>{const k=norm(g.company);(m[k]=m[k]||{k:k,name:g.company,n:0}).n++});
-  return Object.values(m).sort((a,b)=>a.name.localeCompare(b.name));
-}
-const eligible=r=>guests.filter(g=>g.qualified&&!g.won&&(r.all||(r.companies||[]).includes(norm(g.company))));
-const drawnOf=r=>guests.filter(g=>g.wonRound===r.id).length;
-function renderRaffle(){
-  const cs=companies(),keys=cs.map(c=>c.k+':'+c.n+':'+c.name).join('|');
-  if(keys!==lastKeys){
-    lastKeys=keys;
-    const on=new Set([].slice.call(document.querySelectorAll('#clist input:checked')).map(i=>i.value));
-    $('clist').innerHTML=cs.map(c=>'<label class="chk"><input type="checkbox" value="'+esc(c.k)+'"'+(on.has(c.k)||$('call').checked?' checked':'')+'> '+esc(c.name)+' ('+c.n+')</label>').join('')||'<div style="color:var(--mu);font-size:.9rem">No companies yet — confirm guests under Guests &amp; Qualification first.</div>';
+
+$('mno').onclick = () => { pending = null; $('modal').classList.add('hide'); };
+$('myes').onclick = async () => {
+  const p = $('mpin').value.trim();
+  if (p !== HARDCODED_CREDS.admin.pin && p !== String(cfg.admin?.pin)) {
+    return say('mmsg', 'Incorrect Admin PIN.', 'err');
   }
-  $('calltxt').textContent='All companies ('+guests.filter(g=>g.qualified).length+' guests)';
-  const rs=rounds.slice().sort((a,b)=>(a.at||0)-(b.at||0));
-  $('tb-r').innerHTML=rs.map(r=>{
-    const d=drawnOf(r),el=eligible(r).length,lab=(r.all?'All companies':(r.labels||[]).map(esc).join(', '))+(r.prize?'<br><b>🎁 '+esc(r.prize)+'</b>':'');
-    return '<tr><td><b>'+esc(r.name)+'</b></td><td>'+d+' / '+r.draws+'</td><td>'+lab+'<br><small style="color:var(--mu)">'+el+' eligible left</small></td><td style="white-space:nowrap"><button class="sm" data-a="draw" data-id="'+r.id+'"'+((d>=r.draws||!el||drawing)?' disabled':'')+'>Draw</button> <button class="sec sm" data-a="del" data-id="'+r.id+'">Delete</button></td></tr>';
-  }).join('')||'<tr><td colspan="4" style="color:var(--mu)">No rounds yet. Add one above.</td></tr>';
-  $('tb-r2').innerHTML=rs.map(r=>{
-    const d=drawnOf(r),el=eligible(r).length,lab=(r.all?'All companies':(r.labels||[]).map(esc).join(', '))+(r.prize?'<br><b>🎁 '+esc(r.prize)+'</b>':'');
-    return '<tr><td><b>'+esc(r.name)+'</b></td><td>'+d+' / '+r.draws+'</td><td>'+lab+'<br><small style="color:var(--mu)">'+el+' eligible left</small></td><td><button data-a="draw" data-id="'+r.id+'"'+((d>=r.draws||!el||drawing)?' disabled':'')+'>Draw</button></td></tr>';
-  }).join('')||'<tr><td colspan="4" style="color:var(--mu)">No rounds yet.</td></tr>';
-  const won=guests.filter(g=>g.won).sort((a,b)=>(a.wonAt||0)-(b.wonAt||0));
-  if(!drawing&&!spinT){const l=won[won.length-1];setWin(l?'🎉 '+esc(l.name)+'<small>'+esc(l.company)+(l.wonSet?' · '+esc(l.wonSet):'')+(l.wonPrize?'<br>🎁 '+esc(l.wonPrize):'')+'</small>':'—')}
-  $('tb-w').innerHTML=won.map((g,i)=>{
-    let st;
-    if(g.claimed)st='<span class="tag y">Claimed</span> <small>'+new Date(g.claimedAt).toLocaleString()+'</small>'+(g.signature?'<img class="sigimg" alt="Signature" src="'+g.signature+'">':'')+'<br><button class="sec sm" data-a="undo" data-id="'+g.id+'" style="margin-top:6px">Undo</button>';
-    else st='<span class="tag w">Unclaimed</span> <button class="ok sm" data-a="claim" data-id="'+g.id+'">Mark claimed</button> <button class="sec sm" data-a="back" data-id="'+g.id+'">Return to pool</button>';
-    return '<tr><td>'+(i+1)+'</td><td>'+esc(g.name)+'</td><td>'+esc(g.company)+'</td><td>'+esc(g.wonSet||'')+'</td><td>'+esc(g.wonPrize||'')+'</td><td>'+esc(g.drawnBy||'')+'</td><td>'+st+'</td></tr>';
-  }).join('')||'<tr><td colspan="7" style="color:var(--mu)">No winners yet.</td></tr>';
-}
-$('call').onchange=()=>{[].forEach.call(document.querySelectorAll('#clist input'),i=>i.checked=$('call').checked)};
-$('clist').onchange=()=>{const a=[].slice.call(document.querySelectorAll('#clist input'));$('call').checked=a.length>0&&a.every(i=>i.checked)};
-$('radd').onclick=async()=>{
-  const name=$('rname').value.trim(),draws=parseInt($('rdraws').value,10);
-  const sel=[].slice.call(document.querySelectorAll('#clist input:checked')).map(i=>i.value);
-  if(!name)return say('rmsg','Please type a set name, e.g. Set 1.','err');
-  if(!(draws>=1))return say('rmsg','Number of draws must be at least 1.','err');
-  if(!sel.length)return say('rmsg','Tick at least one company, or All companies.','err');
-  if(rounds.some(r=>norm(r.name)===norm(name)))return say('rmsg','A round with this name already exists.','err');
-  const labels=companies().filter(c=>sel.includes(c.k)).map(c=>c.name);
-  const ok=await rsave(uid(),{name:name,prize:$('rprize').value.trim(),draws:draws,all:$('call').checked,companies:sel,labels:labels,at:Date.now()});
-  if(!ok)return say('rmsg','Could not add the round.','err');
-  $('rname').value='';$('rprize').value='';$('rdraws').value=1;say('rmsg','Round “'+name+'” added.','good');
+  const f = pending;
+  pending = null;
+  $('modal').classList.add('hide');
+  if (f) await f();
 };
-const rclick=e=>{
-  const b=e.target.closest('button');if(!b)return;const r=rounds.find(x=>x.id===b.dataset.id);if(!r)return;
-  if(b.dataset.a==='del'&&role!=='admin')return;
-  if(b.dataset.a==='draw'&&role==='wall')return;
-  if(b.dataset.a==='del')return ask('Delete round','Enter the Admin ID to delete “'+r.name+'”. Winners already drawn are kept.',()=>rremove(r.id));
-  if(drawing||spinT)return;
-  const pool=eligible(r);if(!pool.length||drawnOf(r)>=r.draws)return;
-  drawing=true;setLive('drawing');render();
-  const pick=pool[Math.floor(Math.random()*pool.length)];let n=0;
-  const t=setInterval(async()=>{
-    const x=pool[Math.floor(Math.random()*pool.length)];
-    setWin(esc(x.name)+'<small>'+esc(x.company)+'</small>');
-    if(++n>25){
-      clearInterval(t);
-      setWin('🎉 '+esc(pick.name)+'<small>'+esc(pick.company)+' · '+esc(r.name)+(r.prize?'<br>🎁 '+esc(r.prize):'')+'</small>');
-      await patch(pick.id,{won:true,wonAt:Date.now(),wonRound:r.id,wonSet:r.name,drawnBy:myId(),wonPrize:r.prize||'',claimed:false,claimedAt:0,signature:''});
-      drawing=false;setLive('done');render();
-    }
-  },90);
-};
-$('tb-r').onclick=rclick;$('tb-r2').onclick=rclick;
-$('fs').onclick=()=>{const e=$('v-wall');try{(e.requestFullscreen||e.webkitRequestFullscreen).call(e)}catch(x){}};
+$('mpin').onkeydown = e => { if (e.key === 'Enter') $('myes').click(); };
 
-/* ---------- claiming & signature ---------- */
-const cv=$('sig'),cx=cv.getContext('2d');let sigFor=null,inked=false,down=false;
-function clr(){cx.fillStyle='#fff';cx.fillRect(0,0,cv.width,cv.height);cx.strokeStyle='#111';cx.lineWidth=3;cx.lineCap='round';cx.lineJoin='round';inked=false}
-function pos(e){const r=cv.getBoundingClientRect();return[(e.clientX-r.left)*cv.width/r.width,(e.clientY-r.top)*cv.height/r.height]}
-cv.onpointerdown=e=>{down=true;try{cv.setPointerCapture(e.pointerId)}catch(x){}const p=pos(e);cx.beginPath();cx.moveTo(p[0],p[1]);cx.lineTo(p[0]+.1,p[1]+.1);cx.stroke();inked=true;e.preventDefault()};
-cv.onpointermove=e=>{if(!down)return;const p=pos(e);cx.lineTo(p[0],p[1]);cx.stroke();cx.beginPath();cx.moveTo(p[0],p[1])};
-cv.onpointerup=cv.onpointercancel=()=>{down=false};
+/* ================== RAFFLE DRAW ================== */
+let drawing = false, lastKeys = '';
+const setWin = h => { $('win').innerHTML = h; $('win2').innerHTML = h; };
+const myId = () => role === 'admin' ? 'Admin' : role === 'picker' ? 'Picker' + (cfg.picker?.name ? ' (' + cfg.picker.name + ')' : '') : 'Video Wall';
+
+let spinT = null;
+function spin(on) {
+  if (on && !spinT && !drawing) {
+    startDrumRoll();
+    spinT = setInterval(() => {
+      const q = guests.filter(g => g.qualified && !g.won);
+      if (q.length) {
+        const x = q[Math.floor(Math.random() * q.length)];
+        setWin(esc(x.name) + '<small>' + esc(x.company) + '</small>');
+      }
+    }, 80);
+  }
+  if (!on && spinT) {
+    clearInterval(spinT);
+    spinT = null;
+    stopDrumRoll();
+  }
+}
+
+function companies() {
+  const m = {};
+  guests.filter(g => g.qualified).forEach(g => {
+    const k = norm(g.company);
+    (m[k] = m[k] || { k: k, name: g.company, n: 0 }).n++;
+  });
+  return Object.values(m).sort((a, b) => a.name.localeCompare(b.name));
+}
+
+const eligible = r => guests.filter(g => g.qualified && !g.won && (r.all || (r.companies || []).includes(norm(g.company))));
+const drawnOf = r => guests.filter(g => g.wonRound === r.id).length;
+
+function renderRaffle() {
+  const cs = companies(), keys = cs.map(c => c.k + ':' + c.n + ':' + c.name).join('|');
+  if (keys !== lastKeys) {
+    lastKeys = keys;
+    const on = new Set([].slice.call(document.querySelectorAll('#clist input:checked')).map(i => i.value));
+    $('clist').innerHTML = cs.map(c =>
+      '<label class="chk"><input type="checkbox" value="' + esc(c.k) + '"' + (on.has(c.k) || $('call').checked ? ' checked' : '') + '> ' + esc(c.name) + ' (' + c.n + ')</label>'
+    ).join('') || '<div style="color:var(--mu);font-size:.9rem">No companies yet — qualify guests under Guests &amp; Qualification first.</div>';
+  }
+  $('calltxt').textContent = 'All companies (' + guests.filter(g => g.qualified).length + ' qualified guests)';
+
+  const rs = rounds.slice().sort((a, b) => (a.at || 0) - (b.at || 0));
+  $('tb-r').innerHTML = rs.map(r => {
+    const d = drawnOf(r), el = eligible(r).length;
+    const lab = (r.all ? 'All companies' : (r.labels || []).map(esc).join(', ')) + (r.prize ? '<br><b>🎁 ' + esc(r.prize) + '</b>' : '');
+    return '<tr><td><b>' + esc(r.name) + '</b></td><td>' + d + ' / ' + r.draws + '</td><td>' + lab + '<br><small style="color:var(--mu)">' + el + ' eligible left</small></td><td style="white-space:nowrap"><button class="sm" data-a="draw" data-id="' + r.id + '"' + ((d >= r.draws || !el || drawing) ? ' disabled' : '') + '>Draw</button> <button class="sec sm" data-a="del" data-id="' + r.id + '">Delete</button></td></tr>';
+  }).join('') || '<tr><td colspan="4" style="color:var(--mu)">No rounds yet. Add one above.</td></tr>';
+
+  $('tb-r2').innerHTML = rs.map(r => {
+    const d = drawnOf(r), el = eligible(r).length;
+    const lab = (r.all ? 'All companies' : (r.labels || []).map(esc).join(', ')) + (r.prize ? '<br><b>🎁 ' + esc(r.prize) + '</b>' : '');
+    return '<tr><td><b>' + esc(r.name) + '</b></td><td>' + d + ' / ' + r.draws + '</td><td>' + lab + '<br><small style="color:var(--mu)">' + el + ' eligible left</small></td><td><button class="ok" data-a="draw" data-id="' + r.id + '"' + ((d >= r.draws || !el || drawing) ? ' disabled' : '') + '>Draw</button></td></tr>';
+  }).join('') || '<tr><td colspan="4" style="color:var(--mu)">No rounds yet.</td></tr>';
+
+  const won = guests.filter(g => g.won).sort((a, b) => (a.wonAt || 0) - (b.wonAt || 0));
+  if (!drawing && !spinT) {
+    const l = won[won.length - 1];
+    setWin(l ? '🎉 ' + esc(l.name) + '<small>' + esc(l.company) + (l.wonSet ? ' · ' + esc(l.wonSet) : '') + (l.wonPrize ? '<br>🎁 ' + esc(l.wonPrize) : '') + '</small>' : '—');
+  }
+
+  $('tb-w').innerHTML = won.map((g, i) => {
+    let st;
+    if (g.claimed) st = '<span class="tag y">Claimed</span> <small>' + new Date(g.claimedAt).toLocaleTimeString() + '</small>' + (g.signature ? '<img class="sigimg" alt="Signature" src="' + g.signature + '">' : '') + '<br><button class="sec sm" data-a="undo" data-id="' + g.id + '" style="margin-top:4px">Undo</button>';
+    else st = '<span class="tag w">Unclaimed</span> <button class="ok sm" data-a="claim" data-id="' + g.id + '">Claim</button> <button class="sec sm" data-a="back" data-id="' + g.id + '">Return</button>';
+    return '<tr><td>' + (i + 1) + '</td><td><b>' + esc(g.name) + '</b></td><td>' + esc(g.company) + '</td><td>' + esc(g.wonSet || '') + '</td><td>' + esc(g.wonPrize || '') + '</td><td>' + esc(g.drawnBy || '') + '</td><td>' + st + '</td></tr>';
+  }).join('') || '<tr><td colspan="7" style="color:var(--mu)">No winners yet.</td></tr>';
+}
+
+$('call').onchange = () => { [].forEach.call(document.querySelectorAll('#clist input'), i => i.checked = $('call').checked); };
+$('clist').onchange = () => { const a = [].slice.call(document.querySelectorAll('#clist input')); $('call').checked = a.length > 0 && a.every(i => i.checked); };
+
+$('radd').onclick = async () => {
+  const name = $('rname').value.trim(), draws = parseInt($('rdraws').value, 10);
+  const sel = [].slice.call(document.querySelectorAll('#clist input:checked')).map(i => i.value);
+  if (!name) return say('rmsg', 'Please type a set name, e.g. Major Prize Set 1.', 'err');
+  if (!(draws >= 1)) return say('rmsg', 'Number of draws must be at least 1.', 'err');
+  if (!sel.length) return say('rmsg', 'Tick at least one company, or All companies.', 'err');
+  if (rounds.some(r => norm(r.name) === norm(name))) return say('rmsg', 'A round with this name already exists.', 'err');
+
+  const labels = companies().filter(c => sel.includes(c.k)).map(c => c.name);
+  const ok = await rsave(uid(), {
+    name: name,
+    prize: $('rprize').value.trim(),
+    draws: draws,
+    all: $('call').checked,
+    companies: sel,
+    labels: labels,
+    at: Date.now()
+  });
+  if (!ok) return say('rmsg', 'Could not add the round.', 'err');
+  $('rname').value = '';
+  $('rprize').value = '';
+  $('rdraws').value = 1;
+  say('rmsg', 'Round “' + name + '” added successfully.', 'good');
+};
+
+const rclick = e => {
+  const b = e.target.closest('button');
+  if (!b) return;
+  const r = rounds.find(x => x.id === b.dataset.id);
+  if (!r) return;
+  if (b.dataset.a === 'del' && role !== 'admin') return;
+  if (b.dataset.a === 'del') {
+    return ask('Delete round', 'Enter the Admin PIN to delete “' + r.name + '”. Winners already drawn are kept.', () => rremove(r.id));
+  }
+  if (drawing || spinT) return;
+  const pool = eligible(r);
+  if (!pool.length || drawnOf(r) >= r.draws) return;
+
+  drawing = true;
+  startDrumRoll();
+  if (bc) bc.postMessage({ type: 'SPIN_STATE', drawing: true });
+  render();
+
+  const pick = pool[Math.floor(Math.random() * pool.length)];
+  let n = 0;
+  const t = setInterval(async () => {
+    const x = pool[Math.floor(Math.random() * pool.length)];
+    setWin(esc(x.name) + '<small>' + esc(x.company) + '</small>');
+    if (++n > 28) {
+      clearInterval(t);
+      stopDrumRoll();
+      playFanfare();
+      launchConfetti();
+      setWin('🎉 ' + esc(pick.name) + '<small>' + esc(pick.company) + ' · ' + esc(r.name) + (r.prize ? '<br>🎁 ' + esc(r.prize) : '') + '</small>');
+      await patch(pick.id, {
+        won: true,
+        wonAt: Date.now(),
+        wonRound: r.id,
+        wonSet: r.name,
+        drawnBy: myId(),
+        wonPrize: r.prize || '',
+        claimed: false,
+        claimedAt: 0,
+        signature: ''
+      });
+      drawing = false;
+      if (bc) bc.postMessage({ type: 'SPIN_STATE', drawing: false });
+      render();
+    }
+  }, 85);
+};
+
+$('tb-r').onclick = rclick;
+$('tb-r2').onclick = rclick;
+
+$('fs').onclick = () => {
+  const e = $('v-wall');
+  try { (e.requestFullscreen || e.webkitRequestFullscreen).call(e); } catch(x) {}
+};
+
+$('soundToggle').onclick = () => {
+  soundEnabled = !soundEnabled;
+  $('soundToggle').textContent = soundEnabled ? '🔊 Sound ON' : '🔇 Sound OFF';
+};
+
+/* ================== SIGNATURE & CLAIMING ================== */
+const cv = $('sig'), cx = cv.getContext('2d');
+let sigFor = null, inked = false, down = false;
+function clr() {
+  cx.fillStyle = '#fff';
+  cx.fillRect(0, 0, cv.width, cv.height);
+  cx.strokeStyle = '#111';
+  cx.lineWidth = 3;
+  cx.lineCap = 'round';
+  cx.lineJoin = 'round';
+  inked = false;
+}
+function pos(e) {
+  const r = cv.getBoundingClientRect();
+  return [(e.clientX - r.left) * cv.width / r.width, (e.clientY - r.top) * cv.height / r.height];
+}
+cv.onpointerdown = e => {
+  down = true;
+  try { cv.setPointerCapture(e.pointerId); } catch(x) {}
+  const p = pos(e);
+  cx.beginPath();
+  cx.moveTo(p[0], p[1]);
+  cx.lineTo(p[0] + .1, p[1] + .1);
+  cx.stroke();
+  inked = true;
+  e.preventDefault();
+};
+cv.onpointermove = e => {
+  if (!down) return;
+  const p = pos(e);
+  cx.lineTo(p[0], p[1]);
+  cx.stroke();
+  cx.beginPath();
+  cx.moveTo(p[0], p[1]);
+};
+cv.onpointerup = cv.onpointercancel = () => { down = false; };
 clr();
-function closeSig(){sigFor=null;$('sigbox').classList.add('hide');$('sigmsg').innerHTML=''}
-async function claim(sig){
-  if(!sigFor)return;const id=sigFor;
-  const ok=await patch(id,{claimed:true,claimedAt:Date.now(),signature:sig||''});
-  if(!ok)return say('sigmsg','Could not save. If a signature was taken, try Clear and sign again.','err');
+
+function closeSig() { sigFor = null; $('sigbox').classList.add('hide'); $('sigmsg').innerHTML = ''; }
+async function claim(sig) {
+  if (!sigFor) return;
+  const id = sigFor;
+  const ok = await patch(id, { claimed: true, claimedAt: Date.now(), signature: sig || '' });
+  if (!ok) return say('sigmsg', 'Could not save claiming status.', 'err');
   closeSig();
 }
-$('ssig').onclick=()=>{if(!inked)return say('sigmsg','Please sign in the box first.','err');claim(cv.toDataURL('image/png'))};
-$('snosig').onclick=()=>claim('');
-$('sclear').onclick=()=>{clr();$('sigmsg').innerHTML=''};
-$('scancel').onclick=closeSig;
-$('tb-w').onclick=e=>{
-  const b=e.target.closest('button');if(!b)return;const g=guests.find(x=>x.id===b.dataset.id);if(!g)return;
-  if(b.dataset.a==='claim'){sigFor=g.id;$('signame').textContent=g.name+' ('+g.company+')';clr();$('sigmsg').innerHTML='';$('sigbox').classList.remove('hide');$('sigbox').scrollIntoView({behavior:'smooth',block:'center'})}
-  else if(b.dataset.a==='undo')patch(g.id,{claimed:false,claimedAt:0,signature:''});
-  else if(b.dataset.a==='back')patch(g.id,{won:false,wonAt:0,wonRound:'',wonSet:'',drawnBy:'',wonPrize:'',claimed:false,claimedAt:0,signature:''});
+$('ssig').onclick = () => { if (!inked) return say('sigmsg', 'Please sign in the box first.', 'err'); claim(cv.toDataURL('image/png')); };
+$('snosig').onclick = () => claim('');
+$('sclear').onclick = () => { clr(); $('sigmsg').innerHTML = ''; };
+$('scancel').onclick = closeSig;
+
+$('tb-w').onclick = e => {
+  const b = e.target.closest('button');
+  if (!b) return;
+  const g = guests.find(x => x.id === b.dataset.id);
+  if (!g) return;
+  if (b.dataset.a === 'claim') {
+    sigFor = g.id;
+    $('signame').textContent = g.name + ' (' + g.company + ')';
+    clr();
+    $('sigmsg').innerHTML = '';
+    $('sigbox').classList.remove('hide');
+    $('sigbox').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  } else if (b.dataset.a === 'undo') {
+    patch(g.id, { claimed: false, claimedAt: 0, signature: '' });
+  } else if (b.dataset.a === 'back') {
+    patch(g.id, { won: false, wonAt: 0, wonRound: '', wonSet: '', drawnBy: '', wonPrize: '', claimed: false, claimedAt: 0, signature: '' });
+  }
 };
 
-$('esave').onclick=async()=>{
-  const n=$('ename').value.trim();
-  if(!n)return say('emsg','Please enter the event name.','err');
-  cfg.event=n;cfg.occasion=$('otype').value.trim();cfg.date=$('edate').value;
-  const ok=await saveCfg();applyCfg();
-  say('emsg',ok?'Event details saved.':'Could not save event details.',ok?'good':'err');
+/* ================== EVENT & SETUP SAVE ================== */
+$('esave').onclick = async () => {
+  const n = $('ename').value.trim();
+  if (!n) return say('emsg', 'Please enter the event name.', 'err');
+  cfg.event = n;
+  cfg.occasion = $('otype').value.trim();
+  cfg.date = $('edate').value;
+  await saveCfg();
+  applyCfg();
+  say('emsg', 'Event details saved successfully.', 'good');
 };
 
-/* ---------- setup ---------- */
-$('ssave').onclick=async()=>{
-  const v=id=>$(id).value.trim();
-  if(!v('sgrid')||!v('sgrpin')||!v('swid')||!v('swpin')||!v('spid')||!v('sppin')||!v('sadid')||!v('sadpin'))return say('smsg','All fields are required.','err');
-  const ids=[v('sgrid'),v('swid'),v('spid'),v('sadid')].map(norm);
-  if(new Set(ids).size<4)return say('smsg','Guest Relations, Draw Picker, Video Wall and Admin IDs must all be different.','err');
-  cfg={event:cfg.event,occasion:cfg.occasion,date:cfg.date,gr:{id:v('sgrid'),pin:v('sgrpin')},wall:{id:v('swid'),pin:v('swpin')},picker:{id:v('spid'),pin:v('sppin'),name:v('spname')},admin:{id:v('sadid'),pin:v('sadpin')}};
-  say('smsg',(await saveCfg())?'Setup saved.':'Could not save setup.',(await Promise.resolve(1))?'good':'err');applyCfg();
+$('ssave').onclick = async () => {
+  const v = id => $(id).value.trim();
+  cfg.event = cfg.event || DEF.event;
+  cfg.admin = { id: v('sadid') || DEF.admin.id, pin: v('sadpin') || DEF.admin.pin };
+  cfg.hr = { id: v('shrid') || DEF.hr.id, pin: v('shrpin') || DEF.hr.pin };
+  cfg.accounting = { id: v('sacctgid') || DEF.accounting.id, pin: v('sacctgpin') || DEF.accounting.pin };
+  cfg.picker = { id: v('spid') || DEF.picker.id, pin: v('sppin') || DEF.picker.pin, name: v('spname') };
+  cfg.wall = { id: v('swid') || DEF.wall.id, pin: v('swpin') || DEF.wall.pin };
+  await saveCfg();
+  applyCfg();
+  say('smsg', 'Credentials & setup saved successfully.', 'good');
 };
-$('exp').onclick=async()=>{
-  const rows=[['Name','Company','Registered','Raffle qualified','Confirmed by','Winner','Set','Prize','Drawn by']].concat(guests.slice().sort((a,b)=>(a.at||0)-(b.at||0)).map(g=>[g.name,g.company,g.at?new Date(g.at).toLocaleString():'',g.qualified?'Yes':'No',g.confirmedBy||'',g.won?'Yes':'No',g.wonSet||'',g.wonPrize||'',g.drawnBy||'']));
-  const csv=rows.map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(',')).join('\n');
-  if(!dl)return say('dmsg','File download is not available here. Open the published page in claude.ai to export.','err');
-  try{await dl.save({filename:'guest-list.csv',data:csv});say('dmsg','Export ready.','good')}catch(e){say('dmsg','Export was cancelled.','err')}
-};
-$('reset').onclick=()=>ask('Clear all guests','Enter the Admin ID to permanently delete all '+guests.length+' registrations.',async()=>{
-  for(const g of guests.slice())await remove(g.id);say('dmsg','All guests cleared.','good');
-});
 
-/* ---------- President view (no login) ---------- */
-let pres=false;
-function isPres(){return location.hash.replace('#','')==='president'}
-function renderPres(){
-  $('pevt').textContent=cfg.event;$('pevsub').textContent=evLine();document.title=cfg.event+' – Guests & Winners';
-  $('psync').textContent=$('sync').textContent;$('psync').className=$('sync').className;
-  $('pnote').innerHTML=local?'<div class="msg err">Live data is not available on this device. Open this link while signed in to claude.ai to see the guest list.</div>':'';
-  const q=norm($('psearch').value),by={};
-  guests.forEach(g=>{const k=norm(g.company);(by[k]=by[k]||{name:g.company,list:[]}).list.push(g)});
-  const cs=Object.values(by).sort((a,b)=>a.name.localeCompare(b.name));
-  $('p-all').textContent=guests.length;$('p-co').textContent=cs.length;$('p-w').textContent=guests.filter(g=>g.won).length;
-  $('p-list').innerHTML=cs.map(c=>{
-    const l=c.list.filter(g=>!q||norm(g.name).includes(q)||norm(c.name).includes(q)).sort((a,b)=>a.name.localeCompare(b.name));
-    return l.length?'<div class="co"><b>'+esc(c.name)+' <span>· '+c.list.length+'</span></b>'+l.map(g=>'<span class="chip">'+esc(g.name)+'</span>').join('')+'</div>':'';
-  }).join('')||'<div style="color:var(--mu);padding:10px 0">No guests to show.</div>';
-  const won=guests.filter(g=>g.won).sort((a,b)=>(a.wonAt||0)-(b.wonAt||0)),sets=[],m={};
-  won.forEach(g=>{const s=g.wonSet||'Winners';if(!m[s]){m[s]=[];sets.push(s)}m[s].push(g)});
-  $('p-win').innerHTML=sets.map(s=>'<div class="co"><b>'+esc(s)+' <span>· '+m[s].length+'</span></b>'+m[s].map(g=>'<span class="chip">🎉 '+esc(g.name)+' — '+esc(g.company)+(g.wonPrize?' · 🎁 '+esc(g.wonPrize):'')+'</span>').join('')+'</div>').join('')||'<div style="color:var(--mu)">No winners drawn yet.</div>';
+/* ================== CSV EXPORT & RESET ================== */
+$('exp').onclick = () => {
+  const rows = [
+    ['Name', 'Company', 'Registered Time', 'Raffle Qualified', 'Confirmed By', 'Winner', 'Prize Set', 'Prize', 'Drawn By', 'Claimed', 'Claimed Time']
+  ].concat(guests.slice().sort((a, b) => (a.at || 0) - (b.at || 0)).map(g => [
+    g.name,
+    g.company,
+    g.at ? new Date(g.at).toLocaleString() : '',
+    g.qualified ? 'Yes' : 'No',
+    g.confirmedBy || '',
+    g.won ? 'Yes' : 'No',
+    g.wonSet || '',
+    g.wonPrize || '',
+    g.drawnBy || '',
+    g.claimed ? 'Yes' : 'No',
+    g.claimedAt ? new Date(g.claimedAt).toLocaleString() : ''
+  ]));
+
+  const csv = rows.map(r => r.map(c => '"' + String(c).replace(/"/g, '""') + '"').join(',')).join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = (cfg.event || 'Christmas-Party-Guests').replace(/\s+/g, '_') + '_' + new Date().toISOString().slice(0, 10) + '.csv';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  say('dmsg', 'CSV export downloaded successfully!', 'good');
+};
+
+$('reset').onclick = () => ask(
+  'Clear all guests',
+  'Enter the Admin PIN to permanently clear all ' + guests.length + ' guest registrations.',
+  async () => {
+    guests = [];
+    persistStorage();
+    notifyPeers();
+    render();
+    serverPush();
+    say('dmsg', 'All guest registrations cleared.', 'good');
+  }
+);
+
+/* ================== PRESIDENT LIVE VIEW ================== */
+function renderPres() {
+  $('pevt').textContent = cfg.event;
+  $('pevsub').textContent = evLine();
+  document.title = cfg.event + ' – Guests & Winners';
+  $('psync').textContent = $('sync').textContent;
+  $('psync').className = $('sync').className;
+
+  const q = norm($('psearch').value), by = {};
+  guests.forEach(g => {
+    const k = norm(g.company);
+    (by[k] = by[k] || { name: g.company, list: [] }).list.push(g);
+  });
+  const cs = Object.values(by).sort((a, b) => a.name.localeCompare(b.name));
+  $('p-all').textContent = guests.length;
+  $('p-co').textContent = cs.length;
+  $('p-w').textContent = guests.filter(g => g.won).length;
+
+  $('p-list').innerHTML = cs.map(c => {
+    const l = c.list.filter(g => !q || norm(g.name).includes(q) || norm(c.name).includes(q)).sort((a, b) => a.name.localeCompare(b.name));
+    return l.length ? '<div class="co"><b>' + esc(c.name) + ' <span>· ' + c.list.length + ' guests</span></b>' + l.map(g => '<span class="chip">' + esc(g.name) + '</span>').join('') + '</div>' : '';
+  }).join('') || '<div style="color:var(--mu);padding:10px 0">No guests registered yet.</div>';
+
+  const won = guests.filter(g => g.won).sort((a, b) => (a.wonAt || 0) - (b.wonAt || 0)), sets = [], m = {};
+  won.forEach(g => {
+    const s = g.wonSet || 'Winners';
+    if (!m[s]) { m[s] = []; sets.push(s); }
+    m[s].push(g);
+  });
+  $('p-win').innerHTML = sets.map(s =>
+    '<div class="co"><b>' + esc(s) + ' <span>· ' + m[s].length + '</span></b>' +
+    m[s].map(g => '<span class="chip">🎉 ' + esc(g.name) + ' — ' + esc(g.company) + (g.wonPrize ? ' · 🎁 ' + esc(g.wonPrize) : '') + '</span>').join('') +
+    '</div>'
+  ).join('') || '<div style="color:var(--mu)">No winners drawn yet.</div>';
 }
-$('psearch').oninput=renderPres;
-$('lpres').onclick=()=>{location.hash='president'};
-$('pback').onclick=()=>{location.hash='home'};
-window.addEventListener('hashchange',show);
+
+$('psearch').oninput = renderPres;
+$('lpres').onclick = () => { location.hash = 'president'; };
+$('pback').onclick = () => { location.hash = 'home'; };
+window.addEventListener('hashchange', show);
 
 init();
 })();
