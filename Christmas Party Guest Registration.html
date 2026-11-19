@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Christmas Party Guest Registration</title>
+<title>Christmas Party Guest Registration &amp; Raffle</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎄</text></svg>">
 <style>
 :root{
@@ -30,7 +30,7 @@ body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.45 system-ui,-app
 header{background:linear-gradient(135deg,var(--grn),var(--grn-dark));color:#fff;padding:14px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
 header h1{font-size:1.2rem;margin:0;flex:1;min-width:180px;font-weight:700}
 header small{opacity:.9;font-weight:400}
-main{max-width:920px;margin:0 auto;padding:18px}
+main{max-width:940px;margin:0 auto;padding:18px}
 .card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:20px;margin-bottom:18px;box-shadow:0 2px 6px rgba(0,0,0,0.03)}
 h2{margin:0 0 14px;font-size:1.15rem;font-weight:700;color:var(--tx)}
 label{display:block;font-weight:600;margin:10px 0 4px;font-size:.9rem}
@@ -79,6 +79,139 @@ body.nodraw #v-wall button[data-a=draw]{display:none}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;padding:16px;z-index:20;backdrop-filter:blur(2px)}
 .modal .card{max-width:380px;width:100%;margin:0}
 
+/* ================= LIVE VIDEO WALL STYLES ================= */
+#live-wall {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(circle at center, #1c2b24 0%, #0d1512 100%);
+  color: #fff;
+  padding: 24px;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  position: relative;
+}
+#live-wall header {
+  background: transparent;
+  box-shadow: none;
+  padding: 0 0 16px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.live-stage-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 10px;
+}
+.live-box {
+  width: 100%;
+  max-width: 1020px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 3px solid rgba(201, 150, 43, 0.4);
+  border-radius: 28px;
+  backdrop-filter: blur(10px);
+  padding: 56px 28px;
+  text-align: center;
+  box-shadow: 0 16px 50px rgba(0,0,0,0.6), inset 0 0 40px rgba(201, 150, 43, 0.15);
+  position: relative;
+  transition: all .3s ease;
+}
+.live-box.drawing {
+  border-color: #ffd700;
+  box-shadow: 0 0 60px rgba(255, 215, 0, 0.65), inset 0 0 50px rgba(255, 215, 0, 0.25);
+  animation: live-glow 1s infinite alternate ease-in-out;
+}
+@keyframes live-glow {
+  0% { transform: scale(1); box-shadow: 0 0 40px rgba(255,215,0,0.4); }
+  100% { transform: scale(1.02); box-shadow: 0 0 75px rgba(255,215,0,0.85); }
+}
+.live-status-pill {
+  display: inline-block;
+  padding: 6px 22px;
+  border-radius: 99px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  background: rgba(201, 150, 43, 0.25);
+  border: 1px solid #c9962b;
+  color: #ffd700;
+}
+.live-winner-title {
+  font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+  font-weight: 800;
+  color: #ff6b6b;
+  margin-bottom: 12px;
+  letter-spacing: .05em;
+}
+.live-winner-name {
+  font-size: clamp(3.2rem, 8.5vw, 6.8rem);
+  font-weight: 900;
+  color: #ffd700;
+  line-height: 1.15;
+  text-shadow: 0 4px 20px rgba(0,0,0,0.7);
+  letter-spacing: -0.01em;
+  word-break: break-word;
+  margin: 10px 0;
+}
+.live-winner-sub {
+  font-size: clamp(1.4rem, 3.8vw, 2.4rem);
+  color: #e2e8f0;
+  font-weight: 600;
+  margin-top: 14px;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+}
+.live-winner-prize {
+  font-size: clamp(1.6rem, 4.2vw, 2.9rem);
+  color: #ff8585;
+  font-weight: 800;
+  margin-top: 16px;
+  text-shadow: 0 2px 14px rgba(255, 107, 107, 0.45);
+}
+.live-recent-bar {
+  width: 100%;
+  max-width: 1020px;
+  margin-top: 24px;
+  padding: 16px 24px;
+  background: rgba(0,0,0,0.35);
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  overflow-x: auto;
+}
+.live-recent-label {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #ffd700;
+  text-transform: uppercase;
+  white-space: nowrap;
+  letter-spacing: .05em;
+}
+.live-recent-chips {
+  display: flex;
+  gap: 10px;
+  flex-wrap: nowrap;
+}
+.live-recent-chip {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 99px;
+  padding: 6px 14px;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  color: #f1f5f9;
+}
+
 /* Confetti animation */
 @keyframes confetti-fall {
   0% { transform: translateY(0) rotate(0deg); opacity: 1; }
@@ -88,6 +221,7 @@ body.nodraw #v-wall button[data-a=draw]{display:none}
 </head>
 <body>
 
+<!-- Login Screen -->
 <div id="login" class="card hide">
   <div style="text-align:center;margin-bottom:14px">
     <div style="font-size:2.4rem">🎄</div>
@@ -101,8 +235,10 @@ body.nodraw #v-wall button[data-a=draw]{display:none}
   <div style="margin-top:16px"><button id="lgo" style="width:100%;padding:12px">Sign in</button></div>
   <div id="lmsg"></div>
   <div style="margin-top:12px"><button class="sec" id="lpres" style="width:100%;padding:10px">👁 President view (Live Overview)</button></div>
+  <div style="margin-top:8px"><button class="ok" id="llive" style="width:100%;padding:10px">📺 Open Live Video Wall (Projector View)</button></div>
 </div>
 
+<!-- Main Staff Application -->
 <div id="app" class="hide">
   <header>
     <h1>🎄 <span id="evt">Christmas Party</span><br><small id="evsub"></small><br><small id="who" style="color:var(--gold-light)"></small></h1>
@@ -177,13 +313,16 @@ body.nodraw #v-wall button[data-a=draw]{display:none}
       </div>
 
       <div class="card">
-        <h2>Rounds &amp; Live Draw Preview</h2>
+        <div class="row" style="justify-content:space-between;margin-bottom:12px">
+          <h2 style="margin:0">Rounds &amp; Live Draw Preview</h2>
+          <button class="ok sm" id="btnOpenWall" style="flex:0 0 auto">📺 Launch Full Live Video Wall</button>
+        </div>
         <div class="draw-stage">
           <div class="winner" id="win">—</div>
         </div>
         <div class="tbl">
           <table>
-            <thead><tr><th>Set</th><th>Drawn</th><th>Eligible companies</th><th></th></tr></thead>
+            <thead><tr><th>Set</th><th>Drawn</th><th>Eligible companies</th><th>Action</th></tr></thead>
             <tbody id="tb-r"></tbody>
           </table>
         </div>
@@ -212,21 +351,21 @@ body.nodraw #v-wall button[data-a=draw]{display:none}
       </div>
     </section>
 
-    <!-- Video Wall & Draw Display -->
+    <!-- Draw Operator / Wall Mode Tab inside App -->
     <section id="v-wall" class="hide">
       <div class="card" style="padding:24px">
         <div class="row" style="justify-content:space-between;margin-bottom:16px">
           <div>
-            <h2 style="margin:0" id="wevt">Draw Stage</h2>
+            <h2 style="margin:0" id="wevt">Draw Stage Operator</h2>
             <small id="wevsub" style="color:var(--mu)"></small>
           </div>
           <div style="display:flex;gap:8px;flex:0 0 auto">
+            <button class="ok sm" id="btnLaunchLive">📺 Open Dedicated Live Video Wall</button>
             <button class="sec sm" id="soundToggle">🔊 Sound ON</button>
             <button class="sec sm" id="fs">⛶ Full screen</button>
           </div>
         </div>
 
-        <!-- Big Centered Name Layout -->
         <div class="draw-stage" style="min-height:240px">
           <div class="winner" id="win2">—</div>
         </div>
@@ -305,6 +444,42 @@ body.nodraw #v-wall button[data-a=draw]{display:none}
       </div>
     </section>
   </main>
+</div>
+
+<!-- ================= DEDICATED LIVE VIDEO WALL SHEET ================= -->
+<div id="live-wall" class="hide">
+  <header>
+    <div>
+      <h1 style="margin:0;font-size:1.35rem;font-weight:800;color:#ffd700">🎄 <span id="lw-evt">Christmas Party</span></h1>
+      <small id="lw-sub" style="color:#94a3b8;font-size:0.95rem"></small>
+    </div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <span id="lw-sync" class="tag y">● live</span>
+      <button class="sec sm" id="lw-sound">🔊 Sound ON</button>
+      <button class="sec sm" id="lw-fs">⛶ Full screen</button>
+      <button class="sec sm" id="lw-back" style="background:rgba(255,255,255,0.1);color:#fff">Staff login</button>
+    </div>
+  </header>
+
+  <div class="live-stage-wrap">
+    <div class="live-box" id="live-box">
+      <div class="live-status-pill" id="live-pill">🎁 LIVE RAFFLE DRAW</div>
+      <div id="live-content">
+        <div class="live-winner-title" id="lw-title">READY TO DRAW</div>
+        <div class="live-winner-name" id="lw-name">—</div>
+        <div class="live-winner-sub" id="lw-company">Waiting for next round...</div>
+        <div class="live-winner-prize" id="lw-prize"></div>
+      </div>
+    </div>
+
+    <!-- Recent Winners Bar (No Tables or Clutter) -->
+    <div class="live-recent-bar">
+      <span class="live-recent-label">🏆 Recent Winners:</span>
+      <div class="live-recent-chips" id="lw-recents">
+        <span class="live-recent-chip" style="opacity:0.6">No winners drawn yet</span>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- President Live View -->
@@ -465,7 +640,7 @@ function playFanfare() {
 }
 
 function launchConfetti() {
-  const count = 65;
+  const count = 75;
   const colors = ['#b3262e', '#1f6b4a', '#c9962b', '#ffd700', '#ff4757', '#2ed573'];
   for (let i = 0; i < count; i++) {
     const el = document.createElement('div');
@@ -500,8 +675,9 @@ if (bc) {
     if (ev.data && ev.data.type === 'DATA_UPDATED') {
       loadStorage();
       render();
+      if (isLive()) renderLiveWall();
     } else if (ev.data && ev.data.type === 'SPIN_STATE') {
-      spin(ev.data.drawing);
+      spin(ev.data.drawing, ev.data.round, ev.data.prize);
     }
   };
 }
@@ -543,17 +719,20 @@ async function serverSync() {
         if (Array.isArray(data.rounds)) rounds = data.rounds;
         if (data.cfg) cfg = Object.assign({}, DEF, data.cfg);
         persistStorage();
-        $('sync').textContent = '● cloud sync';
-        $('sync').className = 'tag y';
-        if ($('psync')) { $('psync').textContent = '● cloud sync'; $('psync').className = 'tag y'; }
+        updateSyncTags('● cloud sync');
         render();
+        if (isLive()) renderLiveWall();
         return;
       }
     }
   } catch(e) {}
-  $('sync').textContent = '● live';
-  $('sync').className = 'tag y';
-  if ($('psync')) { $('psync').textContent = '● live'; $('psync').className = 'tag y'; }
+  updateSyncTags('● live');
+}
+
+function updateSyncTags(label) {
+  if ($('sync')) $('sync').textContent = label;
+  if ($('psync')) $('psync').textContent = label;
+  if ($('lw-sync')) $('lw-sync').textContent = label;
 }
 
 async function serverPush() {
@@ -584,6 +763,7 @@ async function patch(id, data) {
   persistStorage();
   notifyPeers();
   render();
+  if (isLive()) renderLiveWall();
   serverPush();
   return true;
 }
@@ -593,6 +773,7 @@ async function remove(id) {
   persistStorage();
   notifyPeers();
   render();
+  if (isLive()) renderLiveWall();
   serverPush();
   return true;
 }
@@ -610,6 +791,7 @@ async function rsave(id, d) {
   persistStorage();
   notifyPeers();
   render();
+  if (isLive()) renderLiveWall();
   serverPush();
   return true;
 }
@@ -619,6 +801,7 @@ async function rremove(id) {
   persistStorage();
   notifyPeers();
   render();
+  if (isLive()) renderLiveWall();
   serverPush();
   return true;
 }
@@ -639,9 +822,27 @@ function isPres() {
   return location.hash.replace('#', '') === 'president';
 }
 
+function isLive() {
+  const h = location.hash.replace('#', '');
+  return h === 'live' || h === 'wall';
+}
+
 function show() {
   const pres = isPres();
+  const live = isLive();
+
   $('pres').classList.toggle('hide', !pres);
+  $('live-wall').classList.toggle('hide', !live);
+
+  if (live) {
+    $('login').classList.add('hide');
+    $('app').classList.add('hide');
+    $('pres').classList.add('hide');
+    $('lw-back').textContent = role ? '← Staff panel' : 'Staff login';
+    renderLiveWall();
+    return;
+  }
+
   if (pres) {
     $('login').classList.add('hide');
     $('app').classList.add('hide');
@@ -649,6 +850,7 @@ function show() {
     renderPres();
     return;
   }
+
   $('login').classList.toggle('hide', !!role);
   $('app').classList.toggle('hide', !role);
   if (!role) return;
@@ -664,13 +866,14 @@ function show() {
 
   let tabs = [['reg', 'Registration']];
   if (role === 'admin') {
-    tabs.push(['guests', 'Guests & Qualification'], ['raffle', 'Raffle'], ['wall', 'Draw Display'], ['pres', 'President View'], ['event', 'Event'], ['setup', 'Setup']);
+    tabs.push(['guests', 'Guests & Qualification'], ['raffle', 'Raffle'], ['wall', 'Draw Operator'], ['live', '📺 Live Video'], ['pres', 'President View'], ['event', 'Event'], ['setup', 'Setup']);
   } else if (role === 'hr' || role === 'accounting') {
-    tabs.push(['guests', 'Guests & Qualification'], ['pres', 'President View']);
+    tabs.push(['guests', 'Guests & Qualification'], ['live', '📺 Live Video'], ['pres', 'President View']);
   } else if (role === 'wall') {
-    tabs = [['wall', 'Draw Display']];
+    location.hash = 'live';
+    return;
   } else if (role === 'picker') {
-    tabs = [['wall', 'Draw']];
+    tabs = [['wall', 'Draw Operator'], ['live', '📺 Live Video']];
   }
 
   document.body.classList.toggle('nodraw', role === 'wall');
@@ -689,6 +892,7 @@ $('tabs').onclick = e => {
   const t = e.target.dataset.t;
   if (!t) return;
   if (t === 'pres') { location.hash = 'president'; return; }
+  if (t === 'live') { location.hash = 'live'; return; }
   tab = t;
   show();
 };
@@ -705,19 +909,19 @@ $('lgo').onclick = () => {
   if ((i === 'admin' || !i) && p === HARDCODED_CREDS.admin.pin) role = 'admin';
   else if ((i === 'hr' || !i) && p === HARDCODED_CREDS.hr.pin) role = 'hr';
   else if ((i === 'accounting' || i === 'acctg' || !i) && p === HARDCODED_CREDS.accounting.pin) role = 'accounting';
-  else if ((i === 'wall' || !i) && p === HARDCODED_CREDS.wall.pin) role = 'wall';
+  else if ((i === 'wall' || !i) && p === HARDCODED_CREDS.wall.pin) { role = 'wall'; location.hash = 'live'; return; }
   else if ((i === 'picker' || !i) && p === HARDCODED_CREDS.picker.pin) role = 'picker';
   // 2. Dynamic config check
   else if (i === norm(cfg.admin?.id) && p === String(cfg.admin?.pin)) role = 'admin';
   else if (i === norm(cfg.hr?.id) && p === String(cfg.hr?.pin)) role = 'hr';
   else if (i === norm(cfg.accounting?.id) && p === String(cfg.accounting?.pin)) role = 'accounting';
-  else if (i === norm(cfg.wall?.id) && p === String(cfg.wall?.pin)) role = 'wall';
+  else if (i === norm(cfg.wall?.id) && p === String(cfg.wall?.pin)) { role = 'wall'; location.hash = 'live'; return; }
   else if (i === norm(cfg.picker?.id) && p === String(cfg.picker?.pin)) role = 'picker';
   else return say('lmsg', 'Incorrect ID or PIN. Please check credentials.', 'err');
 
   try { sessionStorage.setItem('role', role); } catch(e) {}
   $('lpin').value = '';
-  tab = (role === 'wall' || role === 'picker') ? 'wall' : 'reg';
+  tab = role === 'picker' ? 'wall' : 'reg';
   show();
 };
 
@@ -787,6 +991,7 @@ const match = (g, q) => !q || norm(g.name).includes(q) || norm(g.company).includ
 const fmt = t => t ? new Date(t).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : '';
 
 function render() {
+  if (isLive()) { renderLiveWall(); return; }
   if (isPres()) { renderPres(); return; }
   if (!role) return;
 
@@ -825,7 +1030,7 @@ $('tb-g').onclick = e => {
   if (!b) return;
   const g = guests.find(x => x.id === b.dataset.id);
   if (!g) return;
-  if (b.dataset.a === 'q') patch(g.id, { qualified: true, confirmedBy: role.toUpperCase(), confirmedAt: Date.now() });
+  if (b.dataset.a === 'q') patch(g.id, { qualified: true, confirmedBy: (role||'ADMIN').toUpperCase(), confirmedAt: Date.now() });
   else patch(g.id, { qualified: false, won: false, confirmedBy: '', confirmedAt: 0 });
 };
 
@@ -857,18 +1062,28 @@ $('mpin').onkeydown = e => { if (e.key === 'Enter') $('myes').click(); };
 
 /* ================== RAFFLE DRAW ================== */
 let drawing = false, lastKeys = '';
-const setWin = h => { $('win').innerHTML = h; $('win2').innerHTML = h; };
+const setWin = h => {
+  if ($('win')) $('win').innerHTML = h;
+  if ($('win2')) $('win2').innerHTML = h;
+};
 const myId = () => role === 'admin' ? 'Admin' : role === 'picker' ? 'Picker' + (cfg.picker?.name ? ' (' + cfg.picker.name + ')' : '') : 'Video Wall';
 
 let spinT = null;
-function spin(on) {
+function spin(on, roundName, roundPrize) {
+  const box = $('live-box');
   if (on && !spinT && !drawing) {
     startDrumRoll();
+    if (box) box.classList.add('drawing');
+    if ($('live-pill')) $('live-pill').textContent = '🎲 DRAWING WINNER NOW...';
+    if ($('lw-title')) $('lw-title').textContent = (roundName ? roundName.toUpperCase() : 'RAFFLE DRAW') + (roundPrize ? ' · ' + roundPrize : '');
+
     spinT = setInterval(() => {
       const q = guests.filter(g => g.qualified && !g.won);
       if (q.length) {
         const x = q[Math.floor(Math.random() * q.length)];
         setWin(esc(x.name) + '<small>' + esc(x.company) + '</small>');
+        if ($('lw-name')) $('lw-name').textContent = x.name;
+        if ($('lw-company')) $('lw-company').textContent = x.company;
       }
     }, 80);
   }
@@ -876,6 +1091,7 @@ function spin(on) {
     clearInterval(spinT);
     spinT = null;
     stopDrumRoll();
+    if (box) box.classList.remove('drawing');
   }
 }
 
@@ -896,24 +1112,30 @@ function renderRaffle() {
   if (keys !== lastKeys) {
     lastKeys = keys;
     const on = new Set([].slice.call(document.querySelectorAll('#clist input:checked')).map(i => i.value));
-    $('clist').innerHTML = cs.map(c =>
-      '<label class="chk"><input type="checkbox" value="' + esc(c.k) + '"' + (on.has(c.k) || $('call').checked ? ' checked' : '') + '> ' + esc(c.name) + ' (' + c.n + ')</label>'
-    ).join('') || '<div style="color:var(--mu);font-size:.9rem">No companies yet — qualify guests under Guests &amp; Qualification first.</div>';
+    if ($('clist')) {
+      $('clist').innerHTML = cs.map(c =>
+        '<label class="chk"><input type="checkbox" value="' + esc(c.k) + '"' + (on.has(c.k) || $('call').checked ? ' checked' : '') + '> ' + esc(c.name) + ' (' + c.n + ')</label>'
+      ).join('') || '<div style="color:var(--mu);font-size:.9rem">No companies yet — qualify guests under Guests &amp; Qualification first.</div>';
+    }
   }
-  $('calltxt').textContent = 'All companies (' + guests.filter(g => g.qualified).length + ' qualified guests)';
+  if ($('calltxt')) $('calltxt').textContent = 'All companies (' + guests.filter(g => g.qualified).length + ' qualified guests)';
 
   const rs = rounds.slice().sort((a, b) => (a.at || 0) - (b.at || 0));
-  $('tb-r').innerHTML = rs.map(r => {
-    const d = drawnOf(r), el = eligible(r).length;
-    const lab = (r.all ? 'All companies' : (r.labels || []).map(esc).join(', ')) + (r.prize ? '<br><b>🎁 ' + esc(r.prize) + '</b>' : '');
-    return '<tr><td><b>' + esc(r.name) + '</b></td><td>' + d + ' / ' + r.draws + '</td><td>' + lab + '<br><small style="color:var(--mu)">' + el + ' eligible left</small></td><td style="white-space:nowrap"><button class="sm" data-a="draw" data-id="' + r.id + '"' + ((d >= r.draws || !el || drawing) ? ' disabled' : '') + '>Draw</button> <button class="sec sm" data-a="del" data-id="' + r.id + '">Delete</button></td></tr>';
-  }).join('') || '<tr><td colspan="4" style="color:var(--mu)">No rounds yet. Add one above.</td></tr>';
+  if ($('tb-r')) {
+    $('tb-r').innerHTML = rs.map(r => {
+      const d = drawnOf(r), el = eligible(r).length;
+      const lab = (r.all ? 'All companies' : (r.labels || []).map(esc).join(', ')) + (r.prize ? '<br><b>🎁 ' + esc(r.prize) + '</b>' : '');
+      return '<tr><td><b>' + esc(r.name) + '</b></td><td>' + d + ' / ' + r.draws + '</td><td>' + lab + '<br><small style="color:var(--mu)">' + el + ' eligible left</small></td><td style="white-space:nowrap"><button class="sm" data-a="draw" data-id="' + r.id + '"' + ((d >= r.draws || !el || drawing) ? ' disabled' : '') + '>Draw</button> <button class="sec sm" data-a="del" data-id="' + r.id + '">Delete</button></td></tr>';
+    }).join('') || '<tr><td colspan="4" style="color:var(--mu)">No rounds yet. Add one above.</td></tr>';
+  }
 
-  $('tb-r2').innerHTML = rs.map(r => {
-    const d = drawnOf(r), el = eligible(r).length;
-    const lab = (r.all ? 'All companies' : (r.labels || []).map(esc).join(', ')) + (r.prize ? '<br><b>🎁 ' + esc(r.prize) + '</b>' : '');
-    return '<tr><td><b>' + esc(r.name) + '</b></td><td>' + d + ' / ' + r.draws + '</td><td>' + lab + '<br><small style="color:var(--mu)">' + el + ' eligible left</small></td><td><button class="ok" data-a="draw" data-id="' + r.id + '"' + ((d >= r.draws || !el || drawing) ? ' disabled' : '') + '>Draw</button></td></tr>';
-  }).join('') || '<tr><td colspan="4" style="color:var(--mu)">No rounds yet.</td></tr>';
+  if ($('tb-r2')) {
+    $('tb-r2').innerHTML = rs.map(r => {
+      const d = drawnOf(r), el = eligible(r).length;
+      const lab = (r.all ? 'All companies' : (r.labels || []).map(esc).join(', ')) + (r.prize ? '<br><b>🎁 ' + esc(r.prize) + '</b>' : '');
+      return '<tr><td><b>' + esc(r.name) + '</b></td><td>' + d + ' / ' + r.draws + '</td><td>' + lab + '<br><small style="color:var(--mu)">' + el + ' eligible left</small></td><td><button class="ok" data-a="draw" data-id="' + r.id + '"' + ((d >= r.draws || !el || drawing) ? ' disabled' : '') + '>Draw</button></td></tr>';
+    }).join('') || '<tr><td colspan="4" style="color:var(--mu)">No rounds yet.</td></tr>';
+  }
 
   const won = guests.filter(g => g.won).sort((a, b) => (a.wonAt || 0) - (b.wonAt || 0));
   if (!drawing && !spinT) {
@@ -921,16 +1143,18 @@ function renderRaffle() {
     setWin(l ? '🎉 ' + esc(l.name) + '<small>' + esc(l.company) + (l.wonSet ? ' · ' + esc(l.wonSet) : '') + (l.wonPrize ? '<br>🎁 ' + esc(l.wonPrize) : '') + '</small>' : '—');
   }
 
-  $('tb-w').innerHTML = won.map((g, i) => {
-    let st;
-    if (g.claimed) st = '<span class="tag y">Claimed</span> <small>' + new Date(g.claimedAt).toLocaleTimeString() + '</small>' + (g.signature ? '<img class="sigimg" alt="Signature" src="' + g.signature + '">' : '') + '<br><button class="sec sm" data-a="undo" data-id="' + g.id + '" style="margin-top:4px">Undo</button>';
-    else st = '<span class="tag w">Unclaimed</span> <button class="ok sm" data-a="claim" data-id="' + g.id + '">Claim</button> <button class="sec sm" data-a="back" data-id="' + g.id + '">Return</button>';
-    return '<tr><td>' + (i + 1) + '</td><td><b>' + esc(g.name) + '</b></td><td>' + esc(g.company) + '</td><td>' + esc(g.wonSet || '') + '</td><td>' + esc(g.wonPrize || '') + '</td><td>' + esc(g.drawnBy || '') + '</td><td>' + st + '</td></tr>';
-  }).join('') || '<tr><td colspan="7" style="color:var(--mu)">No winners yet.</td></tr>';
+  if ($('tb-w')) {
+    $('tb-w').innerHTML = won.map((g, i) => {
+      let st;
+      if (g.claimed) st = '<span class="tag y">Claimed</span> <small>' + new Date(g.claimedAt).toLocaleTimeString() + '</small>' + (g.signature ? '<img class="sigimg" alt="Signature" src="' + g.signature + '">' : '') + '<br><button class="sec sm" data-a="undo" data-id="' + g.id + '" style="margin-top:4px">Undo</button>';
+      else st = '<span class="tag w">Unclaimed</span> <button class="ok sm" data-a="claim" data-id="' + g.id + '">Claim</button> <button class="sec sm" data-a="back" data-id="' + g.id + '">Return</button>';
+      return '<tr><td>' + (i + 1) + '</td><td><b>' + esc(g.name) + '</b></td><td>' + esc(g.company) + '</td><td>' + esc(g.wonSet || '') + '</td><td>' + esc(g.wonPrize || '') + '</td><td>' + esc(g.drawnBy || '') + '</td><td>' + st + '</td></tr>';
+    }).join('') || '<tr><td colspan="7" style="color:var(--mu)">No winners yet.</td></tr>';
+  }
 }
 
-$('call').onchange = () => { [].forEach.call(document.querySelectorAll('#clist input'), i => i.checked = $('call').checked); };
-$('clist').onchange = () => { const a = [].slice.call(document.querySelectorAll('#clist input')); $('call').checked = a.length > 0 && a.every(i => i.checked); };
+if ($('call')) $('call').onchange = () => { [].forEach.call(document.querySelectorAll('#clist input'), i => i.checked = $('call').checked); };
+if ($('clist')) $('clist').onchange = () => { const a = [].slice.call(document.querySelectorAll('#clist input')); $('call').checked = a.length > 0 && a.every(i => i.checked); };
 
 $('radd').onclick = async () => {
   const name = $('rname').value.trim(), draws = parseInt($('rdraws').value, 10);
@@ -972,14 +1196,22 @@ const rclick = e => {
 
   drawing = true;
   startDrumRoll();
-  if (bc) bc.postMessage({ type: 'SPIN_STATE', drawing: true });
+  if (bc) bc.postMessage({ type: 'SPIN_STATE', drawing: true, round: r.name, prize: r.prize });
   render();
+  if (isLive()) {
+    if ($('live-box')) $('live-box').classList.add('drawing');
+    if ($('live-pill')) $('live-pill').textContent = '🎲 DRAWING WINNER NOW...';
+    if ($('lw-title')) $('lw-title').textContent = r.name.toUpperCase() + (r.prize ? ' · ' + r.prize : '');
+  }
 
   const pick = pool[Math.floor(Math.random() * pool.length)];
   let n = 0;
   const t = setInterval(async () => {
     const x = pool[Math.floor(Math.random() * pool.length)];
     setWin(esc(x.name) + '<small>' + esc(x.company) + '</small>');
+    if ($('lw-name')) $('lw-name').textContent = x.name;
+    if ($('lw-company')) $('lw-company').textContent = x.company;
+
     if (++n > 28) {
       clearInterval(t);
       stopDrumRoll();
@@ -1000,22 +1232,82 @@ const rclick = e => {
       drawing = false;
       if (bc) bc.postMessage({ type: 'SPIN_STATE', drawing: false });
       render();
+      if (isLive()) renderLiveWall();
     }
   }, 85);
 };
 
-$('tb-r').onclick = rclick;
-$('tb-r2').onclick = rclick;
+if ($('tb-r')) $('tb-r').onclick = rclick;
+if ($('tb-r2')) $('tb-r2').onclick = rclick;
 
-$('fs').onclick = () => {
-  const e = $('v-wall');
-  try { (e.requestFullscreen || e.webkitRequestFullscreen).call(e); } catch(x) {}
+/* ================== DEDICATED LIVE VIDEO WALL RENDER ================== */
+function renderLiveWall() {
+  document.title = 'Live Raffle Draw – ' + cfg.event;
+  if ($('lw-evt')) $('lw-evt').textContent = cfg.event;
+  if ($('lw-sub')) $('lw-sub').textContent = evLine();
+
+  const won = guests.filter(g => g.won).sort((a, b) => (a.wonAt || 0) - (b.wonAt || 0));
+  const latest = won[won.length - 1];
+
+  if (!drawing && !spinT) {
+    if ($('live-box')) $('live-box').classList.remove('drawing');
+    if (latest) {
+      if ($('live-pill')) $('live-pill').textContent = '🎉 OFFICIAL WINNER!';
+      if ($('lw-title')) $('lw-title').textContent = (latest.wonSet || 'RAFFLE WINNER').toUpperCase();
+      if ($('lw-name')) $('lw-name').textContent = latest.name;
+      if ($('lw-company')) $('lw-company').textContent = latest.company;
+      if ($('lw-prize')) $('lw-prize').textContent = latest.wonPrize ? '🎁 ' + latest.wonPrize : '';
+    } else {
+      if ($('live-pill')) $('live-pill').textContent = '🎁 LIVE RAFFLE DRAW';
+      if ($('lw-title')) $('lw-title').textContent = 'STANDBY FOR DRAW LOTS';
+      if ($('lw-name')) $('lw-name').textContent = '—';
+      if ($('lw-company')) $('lw-company').textContent = 'Good luck to all registered guests!';
+      if ($('lw-prize')) $('lw-prize').textContent = '';
+    }
+  }
+
+  // Render recent chips
+  if ($('lw-recents')) {
+    if (won.length) {
+      const recentList = won.slice(-6).reverse();
+      $('lw-recents').innerHTML = recentList.map(w =>
+        '<span class="live-recent-chip">🎉 <b>' + esc(w.name) + '</b> (' + esc(w.company) + ')' + (w.wonPrize ? ' · 🎁 ' + esc(w.wonPrize) : '') + '</span>'
+      ).join('');
+    } else {
+      $('lw-recents').innerHTML = '<span class="live-recent-chip" style="opacity:0.6">No winners drawn yet</span>';
+    }
+  }
+}
+
+// Fullscreen & Sound toggles
+const toggleFS = el => {
+  const target = el || document.documentElement;
+  try {
+    if (!document.fullscreenElement) {
+      (target.requestFullscreen || target.webkitRequestFullscreen).call(target);
+    } else {
+      if (document.exitFullscreen) document.exitFullscreen();
+    }
+  } catch(e) {}
 };
 
-$('soundToggle').onclick = () => {
-  soundEnabled = !soundEnabled;
-  $('soundToggle').textContent = soundEnabled ? '🔊 Sound ON' : '🔇 Sound OFF';
+$('fs').onclick = () => toggleFS($('v-wall'));
+$('lw-fs').onclick = () => toggleFS($('live-wall'));
+
+const updateSoundBtn = () => {
+  const txt = soundEnabled ? '🔊 Sound ON' : '🔇 Sound OFF';
+  if ($('soundToggle')) $('soundToggle').textContent = txt;
+  if ($('lw-sound')) $('lw-sound').textContent = txt;
 };
+
+$('soundToggle').onclick = () => { soundEnabled = !soundEnabled; updateSoundBtn(); };
+$('lw-sound').onclick = () => { soundEnabled = !soundEnabled; updateSoundBtn(); };
+
+// Buttons to switch views
+if ($('btnOpenWall')) $('btnOpenWall').onclick = () => { location.hash = 'live'; };
+if ($('btnLaunchLive')) $('btnLaunchLive').onclick = () => { location.hash = 'live'; };
+if ($('llive')) $('llive').onclick = () => { location.hash = 'live'; };
+if ($('lw-back')) $('lw-back').onclick = () => { location.hash = role ? 'app' : 'home'; };
 
 /* ================== SIGNATURE & CLAIMING ================== */
 const cv = $('sig'), cx = cv.getContext('2d');
@@ -1151,6 +1443,7 @@ $('reset').onclick = () => ask(
     persistStorage();
     notifyPeers();
     render();
+    if (isLive()) renderLiveWall();
     serverPush();
     say('dmsg', 'All guest registrations cleared.', 'good');
   }
@@ -1161,8 +1454,10 @@ function renderPres() {
   $('pevt').textContent = cfg.event;
   $('pevsub').textContent = evLine();
   document.title = cfg.event + ' – Guests & Winners';
-  $('psync').textContent = $('sync').textContent;
-  $('psync').className = $('sync').className;
+  if ($('psync')) {
+    $('psync').textContent = $('sync').textContent;
+    $('psync').className = $('sync').className;
+  }
 
   const q = norm($('psearch').value), by = {};
   guests.forEach(g => {
@@ -1194,7 +1489,7 @@ function renderPres() {
 
 $('psearch').oninput = renderPres;
 $('lpres').onclick = () => { location.hash = 'president'; };
-$('pback').onclick = () => { location.hash = 'home'; };
+$('pback').onclick = () => { location.hash = role ? 'app' : 'home'; };
 window.addEventListener('hashchange', show);
 
 init();
