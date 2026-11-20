@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Christmas Party Guest Registration &amp; Raffle</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎄</text></svg>">
 <style>
 :root{
@@ -709,52 +710,84 @@ function persistStorage() {
   } catch(e) {}
 }
 
+// Supabase Cloud Sync Configuration
+const SUPABASE_URL = 'https://svquyjpguhrmhzbgynsw.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_J6udCVSr_aA2_LYp5QcSGQ_hMFu_wMA';
+let supabaseClient = null;
+try {
+  if (window.supabase && window.supabase.createClient) {
+    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    console.log('[MHC] Supabase Party Cloud Sync initialized!');
+  }
+} catch(e) {}
+
 // Background sync with cloud server across different PCs & devices
 let lastServerUpdated = 0;
 let isSyncing = false;
 
+function applyRemoteData(data) {
+  if (!data || !Array.isArray(data.guests)) return;
+  const serverUpdated = data.updated || 0;
+  const serverCount = data.guests.length;
+  const localCount = guests.length;
+
+  if (serverUpdated !== lastServerUpdated || serverCount !== localCount) {
+    lastServerUpdated = serverUpdated;
+    const map = new Map();
+    guests.forEach(g => { if (g && g.id) map.set(g.id, g); });
+    data.guests.forEach(g => { if (g && g.id) map.set(g.id, g); });
+    guests = Array.from(map.values());
+
+    if (Array.isArray(data.rounds) && data.rounds.length) {
+      rounds = data.rounds;
+    }
+    if (data.cfg && Object.keys(data.cfg).length) {
+      cfg = Object.assign({}, DEF, data.cfg);
+    }
+    persistStorage();
+    render();
+    if (isLive()) renderLiveWall();
+  }
+
+  // Live draw lot state from server
+  if (data.live) {
+    const elapsed = Date.now() - (data.live.at || 0);
+    if (data.live.state === 'drawing' && elapsed < 14000) {
+      spin(true, data.live.round, data.live.prize);
+    } else if (data.live.state === 'done') {
+      spin(false);
+    }
+  }
+}
+
 async function serverSync() {
   if (isSyncing) return;
   isSyncing = true;
+
+  // 1. Try Supabase Cloud Database first
+  if (supabaseClient) {
+    try {
+      const { data, error } = await supabaseClient
+        .from('party_sync')
+        .select('data')
+        .eq('room', 'guests')
+        .single();
+      if (!error && data && data.data) {
+        applyRemoteData(data.data);
+        updateSyncTags('● cloud sync');
+        isSyncing = false;
+        return;
+      }
+    } catch(e) {}
+  }
+
+  // 2. Fallback to Local Node Server
   try {
     const res = await fetch(API_BASE + '/api/guest-data', { cache: 'no-store' });
     if (res.ok) {
       const data = await res.json();
       if (data && Array.isArray(data.guests)) {
-        const serverUpdated = data.updated || 0;
-        const serverCount = data.guests.length;
-        const localCount = guests.length;
-
-        if (serverUpdated !== lastServerUpdated || serverCount !== localCount) {
-          lastServerUpdated = serverUpdated;
-          const map = new Map();
-          // Keep local if not yet uploaded
-          guests.forEach(g => { if (g && g.id) map.set(g.id, g); });
-          // Merge authoritative server guests
-          data.guests.forEach(g => { if (g && g.id) map.set(g.id, g); });
-          guests = Array.from(map.values());
-
-          if (Array.isArray(data.rounds) && data.rounds.length) {
-            rounds = data.rounds;
-          }
-          if (data.cfg && Object.keys(data.cfg).length) {
-            cfg = Object.assign({}, DEF, data.cfg);
-          }
-          persistStorage();
-          render();
-          if (isLive()) renderLiveWall();
-        }
-
-        // Live draw lot state from server
-        if (data.live) {
-          const elapsed = Date.now() - (data.live.at || 0);
-          if (data.live.state === 'drawing' && elapsed < 14000) {
-            spin(true, data.live.round, data.live.prize);
-          } else if (data.live.state === 'done') {
-            spin(false);
-          }
-        }
-
+        applyRemoteData(data);
         updateSyncTags('● cloud sync');
         isSyncing = false;
         return;
@@ -768,6 +801,21 @@ async function serverSync() {
 // Automatically poll cloud server every 2 seconds on all connected PCs and devices
 setInterval(serverSync, 2000);
 
+// Realtime Listener for instant updates
+if (supabaseClient) {
+  try {
+    supabaseClient
+      .channel('realtime_guests')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'party_sync', filter: 'room=eq.guests' }, payload => {
+        if (payload.new && payload.new.data) {
+          applyRemoteData(payload.new.data);
+          updateSyncTags('● cloud sync');
+        }
+      })
+      .subscribe();
+  } catch(e) {}
+}
+
 function updateSyncTags(label) {
   if ($('sync')) $('sync').textContent = label;
   if ($('psync')) $('psync').textContent = label;
@@ -775,17 +823,32 @@ function updateSyncTags(label) {
 }
 
 async function serverPush(liveState) {
+  const payload = {
+    guests,
+    rounds,
+    cfg,
+    live: liveState !== undefined ? liveState : null,
+    updated: Date.now()
+  };
+
+  // Push to Supabase Cloud DB
+  if (supabaseClient) {
+    try {
+      await supabaseClient.from('party_sync').upsert({
+        room: 'guests',
+        data: payload,
+        updated_at: new Date().toISOString()
+      });
+      updateSyncTags('● cloud sync');
+    } catch(e) {}
+  }
+
+  // Also push to local server if available
   try {
     await fetch(API_BASE + '/api/guest-data', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        guests,
-        rounds,
-        cfg,
-        live: liveState !== undefined ? liveState : null,
-        updated: Date.now()
-      })
+      body: JSON.stringify(payload)
     });
   } catch(e) {}
 }
